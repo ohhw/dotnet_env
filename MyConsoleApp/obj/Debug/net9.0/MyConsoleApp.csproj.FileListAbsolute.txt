@@ -23,3 +23,4 @@ C:\Users\oh\Documents\MyConsoleApp\MyConsoleApp\obj\Debug\net9.0\staticwebassets
 C:\Users\oh\Documents\MyConsoleApp\MyConsoleApp\obj\Debug\net9.0\staticwebassets.build.json.cache
 C:\Users\oh\Documents\MyConsoleApp\MyConsoleApp\obj\Debug\net9.0\staticwebassets.development.json
 C:\Users\oh\Documents\MyConsoleApp\MyConsoleApp\obj\Debug\net9.0\staticwebassets.build.endpoints.json
+C:\Users\oh\Documents\MyConsoleApp\MyConsoleApp\obj\Debug\net9.0\MyConsoleApp.sourcelink.json
