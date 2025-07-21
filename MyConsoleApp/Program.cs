@@ -44,7 +44,7 @@ app.MapGet("/", () =>
         body {{ font-family: Arial, sans-serif; margin: 50px; background: #f5f6fa; color: #222; }}
         .container {{ max-width: 800px; margin: 0 auto; }}
         .time-display {{ background: #f0f0f0; padding: 20px; border-radius: 10px; margin: 20px 0; color: #222; }}
-        button {{ background: #007bff; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 5px; font-weight: bold; }}
+        button {{ background: #007bff; color: #fff; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 5px; font-weight: bold; font-size: 14px; }}
         button:hover {{ background: #0056b3; }}
         .memo-section {{ background: #fffbe6; padding: 15px; border-radius: 8px; margin: 20px 0; border: 1px solid #ffeaa7; color: #333; }}
         .memo-link {{ background: #17a2b8; color: #fff !important; }}
@@ -53,7 +53,7 @@ app.MapGet("/", () =>
         .add-btn:hover {{ background: #218838; }}
         .delete-btn {{ background: #dc3545; color: #fff; }}
         .delete-btn:hover {{ background: #c82333; }}
-        a {{ text-decoration: none; color: #007bff; display: inline-block; padding: 10px 20px; border-radius: 5px; margin: 5px; font-weight: bold; background: #e9ecef; transition: background 0.2s, color 0.2s; }}
+        a {{ text-decoration: none; color: #007bff; display: inline-block; padding: 10px 20px; border-radius: 5px; margin: 5px; font-weight: bold; background: #e9ecef; transition: background 0.2s, color 0.2s; font-size: 14px; }}
         a:hover {{ background: #d6d8db; color: #0056b3; }}
         .memo-list {{ background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 20px 0; border: 1px solid #dee2e6; color: #222; }}
         .memo-item {{ background: #ffffff; padding: 12px; border-radius: 6px; border: 1px solid #e9ecef; margin: 8px 0; color: #222; }}
@@ -71,7 +71,8 @@ app.MapGet("/", () =>
         </div>
         <div style='text-align: center; margin: 10px 0;'>
             <button onclick='location.reload()'>시간 새로고침</button>
-            <button onclick='window.location.href=""/api/time""' style='background:#343a40;'>JSON 형식으로 시간 보기</button>
+            <button onclick='window.location.href=""/time""' style='background:#343a40;'>� 시간 페이지</button>
+            <button onclick='window.location.href=""/time?format=json""' style='background:#fd7e14;'>� JSON 형식으로 시간 보기</button>
         </div>
         
         <div class='memo-section'>
@@ -88,14 +89,15 @@ app.MapGet("/", () =>
             </div>
             
             <div style='text-align: center; margin-top: 15px;'>
-                <a href='/viewMemo' class='memo-link' style='background:#17a2b8;color:#fff;'>📋 전체 메모 페이지로 이동</a>
+                <a href='/memo/view' class='memo-link' style='background:#17a2b8;color:#fff;'>📋 전체 메모 페이지로 이동</a>
+                {(memos.Count > 0 ? @"<a href='/memo/export' style='background:#fd7e14;color:#fff;'>💾 TXT 파일로 내보내기</a>" : "")}
             </div>
         </div>
         
         <div class='other-links'>
             <h3>🔗 기타 기능</h3>
             <a href='/helloworld' style='background:#6c757d;color:#fff;'>Hello World 페이지</a>
-            <a href='/operator' style='background:#28a745;color:#fff;'>🧮 계산기</a>
+            <a href='/calc' style='background:#28a745;color:#fff;'>🧮 계산기</a>
         </div>
     </div>
     
@@ -103,13 +105,13 @@ app.MapGet("/", () =>
         function addNewMemo() {{
             var message = prompt('새 메모를 입력하세요:');
             if (message && message.trim()) {{
-                window.location.href = '/addMemo?Message=' + encodeURIComponent(message.trim());
+                window.location.href = '/memo/add?Message=' + encodeURIComponent(message.trim());
             }}
         }}
         
         function confirmDelete() {{
             if (confirm('정말로 모든 메모를 삭제하시겠습니까?')) {{
-                window.location.href = '/deleteALL';
+                window.location.href = '/memo/delete';
             }}
         }}
     </script>
@@ -117,8 +119,8 @@ app.MapGet("/", () =>
 </html>", "text/html");
 });
 
-// 메모 추가 기능 - /addMemo?Message=내용
-app.MapGet("/addMemo", (string? Message) => 
+// 메모 추가 기능 - /memo/add
+app.MapGet("/memo/add", (string? Message) => 
 {
     if (string.IsNullOrEmpty(Message))
     {
@@ -132,7 +134,7 @@ app.MapGet("/addMemo", (string? Message) =>
         body { font-family: Arial, sans-serif; margin: 50px; }
         .container { max-width: 600px; margin: 0 auto; }
         .error { background: #f8d7da; color: #721c24; padding: 15px; border-radius: 8px; border: 1px solid #f5c6cb; }
-        button { background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 5px; }
+        button { background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 5px; font-size: 14px; font-weight: bold; }
         button:hover { background: #0056b3; }
     </style>
 </head>
@@ -141,10 +143,10 @@ app.MapGet("/addMemo", (string? Message) =>
         <h1>❌ 메모 추가 실패</h1>
         <div class='error'>
             <p>메시지가 비어있습니다!</p>
-            <p>사용법: /addMemo?Message=여기에메모내용</p>
+            <p>사용법: /memo/add?Message=여기에메모내용</p>
         </div>
         <button onclick='window.location.href=""/"";'>홈으로 돌아가기</button>
-        <button onclick='window.location.href=""/viewMemo"";'>메모 보기</button>
+        <button onclick='window.location.href=""/memo/view"";'>메모 보기</button>
     </div>
 </body>
 </html>", "text/html");
@@ -165,7 +167,7 @@ app.MapGet("/addMemo", (string? Message) =>
         .container {{ max-width: 600px; margin: 0 auto; }}
         .success {{ background: #d4edda; color: #155724; padding: 15px; border-radius: 8px; border: 1px solid #c3e6cb; margin: 20px 0; }}
         .memo-content {{ background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #dee2e6; margin: 10px 0; }}
-        button {{ background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 5px; }}
+        button {{ background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 5px; font-size: 14px; font-weight: bold; }}
         button:hover {{ background: #0056b3; }}
         .view-btn {{ background: #28a745; }}
         .view-btn:hover {{ background: #218838; }}
@@ -183,14 +185,14 @@ app.MapGet("/addMemo", (string? Message) =>
         </div>
         <p><strong>총 메모 개수:</strong> {memos.Count}개</p>
         <button onclick='window.location.href=""/"";'>홈으로 돌아가기</button>
-        <button class='view-btn' onclick='window.location.href=""/viewMemo"";'>모든 메모 보기</button>
+        <button class='view-btn' onclick='window.location.href=""/memo/view"";'>모든 메모 보기</button>
     </div>
 </body>
 </html>", "text/html");
 });
 
-// 메모 보기 기능 - /viewMemo
-app.MapGet("/viewMemo", () => 
+// 메모 보기 기능 - /memo/view
+app.MapGet("/memo/view", () => 
 {
     var memoList = string.Join("", memos.Select((memo, index) => 
         $"<div class='memo-item'><strong>#{index + 1}</strong> {memo}</div>"));
@@ -211,7 +213,7 @@ app.MapGet("/viewMemo", () =>
         .container {{ max-width: 800px; margin: 0 auto; }}
         .memo-item {{ background: #f8f9fa; padding: 15px; border-radius: 8px; border: 1px solid #dee2e6; margin: 10px 0; }}
         .no-memo {{ background: #fff3cd; color: #856404; padding: 20px; border-radius: 8px; text-align: center; border: 1px solid #ffeaa7; }}
-        button {{ background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 5px; }}
+        button {{ background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 5px; font-size: 14px; font-weight: bold; }}
         button:hover {{ background: #0056b3; }}
         .delete-btn {{ background: #dc3545; }}
         .delete-btn:hover {{ background: #c82333; }}
@@ -234,6 +236,7 @@ app.MapGet("/viewMemo", () =>
             <button onclick='window.location.href=""/"";'>🏠 홈으로</button>
             <button class='add-btn' onclick='addNewMemo()'>✏️ 새 메모 추가</button>
             {(memos.Count > 0 ? @"<button class='delete-btn' onclick='confirmDelete()'>🗑️ 모든 메모 삭제</button>" : "")}
+            {(memos.Count > 0 ? @"<button onclick='window.location.href=""/memo/export"";' style='background:#fd7e14;'>💾 TXT 파일로 내보내기</button>" : "")}
             <button onclick='location.reload()'>🔄 새로고침</button>
         </div>
     </div>
@@ -242,13 +245,13 @@ app.MapGet("/viewMemo", () =>
         function addNewMemo() {{
             var message = prompt('새 메모를 입력하세요:');
             if (message && message.trim()) {{
-                window.location.href = '/addMemo?Message=' + encodeURIComponent(message.trim());
+                window.location.href = '/memo/add?Message=' + encodeURIComponent(message.trim());
             }}
         }}
         
         function confirmDelete() {{
             if (confirm('정말로 모든 메모를 삭제하시겠습니까?')) {{
-                window.location.href = '/deleteALL';
+                window.location.href = '/memo/delete';
             }}
         }}
     </script>
@@ -256,8 +259,8 @@ app.MapGet("/viewMemo", () =>
 </html>", "text/html");
 });
 
-// 모든 메모 삭제 기능 - /deleteALL
-app.MapGet("/deleteALL", () => 
+// 모든 메모 삭제 기능 - /memo/delete
+app.MapGet("/memo/delete", () => 
 {
     var deletedCount = memos.Count;
     memos.Clear();
@@ -273,7 +276,7 @@ app.MapGet("/deleteALL", () =>
         .container {{ max-width: 600px; margin: 0 auto; }}
         .warning {{ background: #f8d7da; color: #721c24; padding: 20px; border-radius: 8px; border: 1px solid #f5c6cb; margin: 20px 0; text-align: center; }}
         .success {{ background: #d4edda; color: #155724; padding: 15px; border-radius: 8px; border: 1px solid #c3e6cb; margin: 20px 0; }}
-        button {{ background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 5px; }}
+        button {{ background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 5px; font-size: 14px; font-weight: bold; }}
         button:hover {{ background: #0056b3; }}
         .add-btn {{ background: #28a745; }}
         .add-btn:hover {{ background: #218838; }}
@@ -290,7 +293,7 @@ app.MapGet("/deleteALL", () =>
             <p>삭제 완료 시간: {DateTime.Now:yyyy-MM-dd HH:mm:ss}</p>
         </div>
         <button onclick='window.location.href=""/"";'>🏠 홈으로</button>
-        <button onclick='window.location.href=""/viewMemo"";'>📋 메모 목록 (빈 목록)</button>
+        <button onclick='window.location.href=""/memo/view"";'>📋 메모 목록 (빈 목록)</button>
         <button class='add-btn' onclick='addNewMemo()'>✏️ 새 메모 추가</button>
     </div>
     
@@ -298,7 +301,7 @@ app.MapGet("/deleteALL", () =>
         function addNewMemo() {{
             var message = prompt('새 메모를 입력하세요:');
             if (message && message.trim()) {{
-                window.location.href = '/addMemo?Message=' + encodeURIComponent(message.trim());
+                window.location.href = '/memo/add?Message=' + encodeURIComponent(message.trim());
             }}
         }}
     </script>
@@ -306,67 +309,541 @@ app.MapGet("/deleteALL", () =>
 </html>", "text/html");
 });
 
-// Hello World 경로
-app.MapGet("/helloworld", (string? name) => 
+// 메모 내보내기 페이지 - /memo/export
+app.MapGet("/memo/export", () => 
 {
-    string userName = string.IsNullOrEmpty(name) ? "오현우님" : name + "님";
-    return $"Hello, World! {userName}!";
-});
-
-// 시간 확인 경로
-app.MapGet("/time", (string? name) => 
-{
-    string userName = string.IsNullOrEmpty(name) ? "오현우님" : name + "님";
-    return $"지금 시간을 확인하세요! {userName}! " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-});
-
-// JSON API 경로
-app.MapGet("/api/time", () => Results.Content(@"
+    if (memos.Count == 0)
+    {
+        return Results.Content(@"
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset='utf-8'>
-    <title>시간 확인 - JSON API</title>
+    <title>내보내기 오류</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 50px; }
+        body { font-family: Arial, sans-serif; margin: 50px; background: #f5f6fa; }
         .container { max-width: 600px; margin: 0 auto; }
-        .json-display { background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 20px 0; border: 1px solid #dee2e6; }
-        .time-info { background: #e9ecef; padding: 15px; border-radius: 8px; margin: 10px 0; }
-        button { background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 5px; }
+        .warning { background: #fff3cd; color: #856404; padding: 20px; border-radius: 8px; border: 1px solid #ffeaa7; text-align: center; }
+        button { background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 5px; font-size: 14px; font-weight: bold; }
         button:hover { background: #0056b3; }
-        .back-btn { background: #28a745; }
-        .back-btn:hover { background: #218838; }
-        pre { background: #f1f3f4; padding: 15px; border-radius: 5px; overflow-x: auto; }
+        .home-btn { background: #28a745; }
+        .home-btn:hover { background: #218838; }
     </style>
 </head>
 <body>
     <div class='container'>
-        <h1>JSON API 시간 정보</h1>
+        <h1>📁 메모 내보내기</h1>
+        <div class='warning'>
+            <h3>⚠️ 내보낼 메모가 없습니다</h3>
+            <p>먼저 메모를 추가한 후 내보내기를 시도해주세요.</p>
+        </div>
+        <button class='home-btn' onclick='window.location.href=""/"";'>🏠 홈으로</button>
+        <button onclick='window.location.href=""/memo/view"";'>📋 메모 목록</button>
+    </div>
+</body>
+</html>", "text/html");
+    }
+
+    return Results.Content($@"
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>메모 TXT 파일 내보내기</title>
+    <style>
+        body {{ font-family: Arial, sans-serif; margin: 50px; background: #f5f6fa; }}
+        .container {{ max-width: 700px; margin: 0 auto; }}
+        .export-section {{ background: #ffffff; padding: 30px; border-radius: 15px; margin: 20px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }}
+        .form-group {{ margin: 20px 0; }}
+        .form-group label {{ display: block; margin-bottom: 8px; font-weight: bold; color: #333; }}
+        .form-group input, .form-group select {{ width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; box-sizing: border-box; }}
+        .form-group input:focus {{ border-color: #007bff; outline: none; }}
+        .preview-section {{ background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 20px 0; border: 1px solid #dee2e6; }}
+        .memo-preview {{ background: #ffffff; padding: 15px; border-radius: 8px; border: 1px solid #e9ecef; margin: 8px 0; font-family: monospace; white-space: pre-wrap; max-height: 300px; overflow-y: auto; }}
+        button {{ background: #007bff; color: white; padding: 12px 25px; border: none; border-radius: 8px; cursor: pointer; margin: 5px; font-size: 14px; font-weight: bold; }}
+        button:hover {{ background: #0056b3; }}
+        .export-btn {{ background: #28a745; }}
+        .export-btn:hover {{ background: #218838; }}
+        .cancel-btn {{ background: #6c757d; }}
+        .cancel-btn:hover {{ background: #545b62; }}
+        .header {{ background: #e9ecef; padding: 20px; border-radius: 10px; margin: 20px 0; text-align: center; }}
+        .info-box {{ background: #d1ecf1; color: #0c5460; padding: 15px; border-radius: 8px; margin: 15px 0; border: 1px solid #bee5eb; }}
+        .file-info {{ background: #fff3cd; color: #856404; padding: 15px; border-radius: 8px; margin: 15px 0; border: 1px solid #ffeaa7; }}
+        h1, h2, h3 {{ color: #333; }}
+        .button-group {{ text-align: center; margin: 25px 0; }}
+        .path-examples {{ font-size: 14px; color: #6c757d; margin-top: 5px; }}
+    </style>
+</head>
+<body>
+    <div class='container'>
+        <div class='header'>
+            <h1>💾 메모 TXT 파일로 내보내기</h1>
+            <p>현재 {memos.Count}개의 메모를 텍스트 파일로 저장할 수 있습니다.</p>
+        </div>
+        
+        <div class='export-section'>
+            <form method='get' action='/memo/download'>
+                <div class='form-group'>
+                    <label for='path'>저장 경로:</label>
+                    <input type='text' id='path' name='path' value='C:\\Users\\oh\\Documents' placeholder='예: C:\\Users\\사용자명\\Documents' required>
+                    <div class='path-examples'>
+                        💡 예시: C:\\Users\\oh\\Documents 또는 C:\\temp
+                    </div>
+                </div>
+                
+                <div class='form-group'>
+                    <label for='filename'>파일명:</label>
+                    <input type='text' id='filename' name='filename' value='my_memos_{DateTime.Now:yyyyMMdd_HHmmss}' placeholder='예: my_memos_20240721' required>
+                    <div class='path-examples'>
+                        💡 .txt 확장자는 자동으로 추가됩니다. 한글, 영문, 숫자, 언더스코어(_), 하이픈(-) 사용 가능
+                    </div>
+                </div>
+                
+                <div class='form-group'>
+                    <label for='format'>내보내기 형식:</label>
+                    <select id='format' name='format'>
+                        <option value='numbered'>번호 매기기 (1. 메모내용)</option>
+                        <option value='timestamp'>타임스탬프 포함</option>
+                        <option value='simple'>단순 텍스트</option>
+                        <option value='detailed'>상세 정보 포함</option>
+                    </select>
+                </div>
+                
+                <div class='file-info'>
+                    <h4>📁 파일 정보</h4>
+                    <p><strong>생성될 파일:</strong> <span id='full-path'>C:\\Users\\oh\\Documents\\my_memos_{DateTime.Now:yyyyMMdd_HHmmss}.txt</span></p>
+                    <p><strong>예상 크기:</strong> 약 {string.Join("", memos).Length * 2} bytes</p>
+                    <p><strong>인코딩:</strong> UTF-8</p>
+                </div>
+                
+                <div class='button-group'>
+                    <button type='submit' class='export-btn'>💾 TXT 파일로 내보내기</button>
+                    <button type='button' class='cancel-btn' onclick='window.location.href=""/memo/view"";'>❌ 취소</button>
+                </div>
+            </form>
+        </div>
+        
+        <div class='preview-section'>
+            <h3>📋 미리보기 (처음 5개 메모)</h3>
+            <div class='memo-preview'>{string.Join("\n", memos.Take(5).Select((memo, index) => $"{index + 1}. {memo}"))}{(memos.Count > 5 ? $"\n... 그 외 {memos.Count - 5}개 메모" : "")}</div>
+        </div>
+        
+        <div class='info-box'>
+            <h4>ℹ️ 사용 안내</h4>
+            <ul>
+                <li><strong>경로 설정:</strong> 파일을 저장할 폴더 경로를 입력하세요 (해당 폴더가 존재해야 합니다)</li>
+                <li><strong>파일명:</strong> 특수문자(/ \\ : * ? "" < > |)는 사용할 수 없습니다</li>
+                <li><strong>형식 선택:</strong> 원하는 출력 형식을 선택하세요</li>
+                <li><strong>자동 타임스탬프:</strong> 기본 파일명에 현재 날짜와 시간이 포함됩니다</li>
+            </ul>
+        </div>
+        
+        <div style='text-align: center; margin: 20px 0;'>
+            <button onclick='window.location.href=""/memo/view"";' style='font-size: 14px;'>📋 메모 목록으로</button>
+            <button onclick='window.location.href=""/"";' style='font-size: 14px;'>🏠 홈으로</button>
+        </div>
+    </div>
+    
+    <script>
+        function updateFullPath() {{
+            var path = document.getElementById('path').value;
+            var filename = document.getElementById('filename').value;
+            var fullPath = path;
+            if (!fullPath.endsWith('\\\\') && !fullPath.endsWith('/')) {{
+                fullPath += '\\\\';
+            }}
+            fullPath += filename + '.txt';
+            document.getElementById('full-path').textContent = fullPath;
+        }}
+        
+        document.getElementById('path').addEventListener('input', updateFullPath);
+        document.getElementById('filename').addEventListener('input', updateFullPath);
+        
+        // 파일명 유효성 검사
+        document.getElementById('filename').addEventListener('input', function(e) {{
+            var value = e.target.value;
+            var invalidChars = /[\/\\:*?""<>|]/;
+            if (invalidChars.test(value)) {{
+                e.target.style.borderColor = '#dc3545';
+                e.target.style.backgroundColor = '#f8d7da';
+            }} else {{
+                e.target.style.borderColor = '#28a745';
+                e.target.style.backgroundColor = '#d4edda';
+            }}
+        }});
+        
+        // 초기 실행
+        updateFullPath();
+    </script>
+</body>
+</html>", "text/html");
+});
+
+// 메모 다운로드 실행 - /memo/download
+app.MapGet("/memo/download", (string? path, string? filename, string? format) => 
+{
+    if (memos.Count == 0)
+    {
+        return Results.Content(@"
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>다운로드 오류</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 50px; }
+        .container { max-width: 600px; margin: 0 auto; }
+        .error { background: #f8d7da; color: #721c24; padding: 15px; border-radius: 8px; border: 1px solid #f5c6cb; }
+        button { background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 5px; }
+        button:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <div class='container'>
+        <h1>❌ 다운로드 실패</h1>
+        <div class='error'>
+            <p>내보낼 메모가 없습니다!</p>
+        </div>
+        <button onclick='window.location.href=""/"";'>홈으로 돌아가기</button>
+    </div>
+</body>
+</html>", "text/html");
+    }
+
+    if (string.IsNullOrEmpty(path) || string.IsNullOrEmpty(filename))
+    {
+        return Results.Content(@"
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>다운로드 오류</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 50px; }
+        .container { max-width: 600px; margin: 0 auto; }
+        .error { background: #f8d7da; color: #721c24; padding: 15px; border-radius: 8px; border: 1px solid #f5c6cb; }
+        button { background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 5px; }
+        button:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <div class='container'>
+        <h1>❌ 다운로드 실패</h1>
+        <div class='error'>
+            <p>경로와 파일명을 모두 입력해주세요!</p>
+        </div>
+        <button onclick='window.location.href=""/memo/export"";'>다시 시도</button>
+        <button onclick='window.location.href=""/"";'>홈으로 돌아가기</button>
+    </div>
+</body>
+</html>", "text/html");
+    }
+
+    try
+    {
+        // 파일 내용 생성
+        string content = "";
+        string formatType = format ?? "numbered";
+        var timestamp = DateTime.Now;
+        
+        switch (formatType)
+        {
+            case "numbered":
+                content = string.Join("\n", memos.Select((memo, index) => $"{index + 1}. {memo}"));
+                break;
+            case "timestamp":
+                content = string.Join("\n", memos);
+                break;
+            case "simple":
+                content = string.Join("\n", memos.Select(memo => 
+                {
+                    // 타임스탬프 제거
+                    var match = System.Text.RegularExpressions.Regex.Match(memo, @"^\[.*?\] (.*)$");
+                    return match.Success ? match.Groups[1].Value : memo;
+                }));
+                break;
+            case "detailed":
+                content = $"오현우님의 메모장 백업\n";
+                content += $"생성일시: {timestamp:yyyy-MM-dd HH:mm:ss}\n";
+                content += $"총 메모 개수: {memos.Count}개\n";
+                content += $"================================\n\n";
+                content += string.Join("\n\n", memos.Select((memo, index) => $"[메모 #{index + 1}]\n{memo}"));
+                content += $"\n\n================================\n";
+                content += $"백업 완료: {timestamp:yyyy-MM-dd HH:mm:ss}";
+                break;
+        }
+
+        // 파일 경로 생성
+        var fullPath = Path.Combine(path, filename + ".txt");
+        
+        // 디렉토리 존재 확인 및 생성
+        var directory = Path.GetDirectoryName(fullPath);
+        if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
+        {
+            Directory.CreateDirectory(directory);
+        }
+        
+        // 파일 저장
+        File.WriteAllText(fullPath, content, System.Text.Encoding.UTF8);
+        
+        return Results.Content($@"
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>메모 내보내기 완료</title>
+    <style>
+        body {{ font-family: Arial, sans-serif; margin: 50px; background: #f5f6fa; }}
+        .container {{ max-width: 700px; margin: 0 auto; }}
+        .success {{ background: #d4edda; color: #155724; padding: 20px; border-radius: 8px; border: 1px solid #c3e6cb; margin: 20px 0; }}
+        .file-info {{ background: #f8f9fa; padding: 20px; border-radius: 8px; border: 1px solid #dee2e6; margin: 20px 0; }}
+        .stats {{ background: #e9ecef; padding: 15px; border-radius: 8px; margin: 15px 0; }}
+        button {{ background: #007bff; color: white; padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer; margin: 5px; font-weight: bold; font-size: 14px; }}
+        button:hover {{ background: #0056b3; }}
+        .home-btn {{ background: #28a745; }}
+        .home-btn:hover {{ background: #218838; }}
+        .open-btn {{ background: #fd7e14; }}
+        .open-btn:hover {{ background: #e8681a; }}
+        h1, h2, h3 {{ color: #333; }}
+        .file-path {{ font-family: monospace; background: #f1f3f4; padding: 10px; border-radius: 5px; word-break: break-all; }}
+    </style>
+</head>
+<body>
+    <div class='container'>
+        <h1>✅ 메모 내보내기 완료!</h1>
+        
+        <div class='success'>
+            <h3>🎉 TXT 파일이 성공적으로 생성되었습니다!</h3>
+            <p>메모가 텍스트 파일로 저장되었습니다.</p>
+        </div>
+        
+        <div class='file-info'>
+            <h3>📁 파일 정보</h3>
+            <p><strong>저장 위치:</strong></p>
+            <div class='file-path'>{fullPath}</div>
+            <p><strong>파일 크기:</strong> {new FileInfo(fullPath).Length} bytes</p>
+            <p><strong>생성 시간:</strong> {timestamp:yyyy-MM-dd HH:mm:ss}</p>
+            <p><strong>인코딩:</strong> UTF-8</p>
+        </div>
+        
+        <div class='stats'>
+            <h4>📊 내보내기 통계</h4>
+            <p><strong>총 메모 개수:</strong> {memos.Count}개</p>
+            <p><strong>내보내기 형식:</strong> {formatType switch 
+            {
+                "numbered" => "번호 매기기",
+                "timestamp" => "타임스탬프 포함",
+                "simple" => "단순 텍스트",
+                "detailed" => "상세 정보 포함",
+                _ => "기본 형식"
+            }}</p>
+            <p><strong>파일명:</strong> {filename}.txt</p>
+        </div>
+        
+        <div style='text-align: center; margin: 30px 0;'>
+            <button onclick='window.location.href=""/memo/export"";'>🔄 다시 내보내기</button>
+            <button onclick='window.location.href=""/memo/view"";'>📋 메모 목록</button>
+            <button class='home-btn' onclick='window.location.href=""/"";'>🏠 홈으로</button>
+        </div>
+        
+        <div style='background: #d1ecf1; color: #0c5460; padding: 15px; border-radius: 8px; margin: 15px 0; border: 1px solid #bee5eb;'>
+            <h4>💡 안내사항</h4>
+            <ul>
+                <li>파일이 지정된 경로에 성공적으로 저장되었습니다</li>
+                <li>메모장, 워드패드, 또는 다른 텍스트 편집기로 파일을 열 수 있습니다</li>
+                <li>UTF-8 인코딩으로 저장되어 한글이 정상적으로 표시됩니다</li>
+                <li>필요시 언제든지 다시 내보내기할 수 있습니다</li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>", "text/html");
+    }
+    catch (Exception ex)
+    {
+        return Results.Content($@"
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>내보내기 오류</title>
+    <style>
+        body {{ font-family: Arial, sans-serif; margin: 50px; }}
+        .container {{ max-width: 600px; margin: 0 auto; }}
+        .error {{ background: #f8d7da; color: #721c24; padding: 20px; border-radius: 8px; border: 1px solid #f5c6cb; }}
+        .error-details {{ background: #f8f9fa; padding: 15px; border-radius: 5px; margin: 10px 0; font-family: monospace; }}
+        button {{ background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 5px; font-size: 14px; font-weight: bold; }}
+        button:hover {{ background: #0056b3; }}
+        .retry-btn {{ background: #28a745; }}
+        .retry-btn:hover {{ background: #218838; }}
+    </style>
+</head>
+<body>
+    <div class='container'>
+        <h1>❌ 파일 저장 실패</h1>
+        <div class='error'>
+            <h3>파일을 저장하는 중 오류가 발생했습니다</h3>
+            <div class='error-details'>
+                오류 내용: {ex.Message}
+            </div>
+            <p><strong>가능한 원인:</strong></p>
+            <ul>
+                <li>지정된 경로가 존재하지 않습니다</li>
+                <li>해당 폴더에 쓰기 권한이 없습니다</li>
+                <li>파일명에 허용되지 않는 문자가 포함되었습니다</li>
+                <li>디스크 공간이 부족합니다</li>
+            </ul>
+        </div>
+        <button class='retry-btn' onclick='window.location.href=""/memo/export"";'>🔄 다시 시도</button>
+        <button onclick='window.location.href=""/memo/view"";'>📋 메모 목록</button>
+        <button onclick='window.location.href=""/"";'>🏠 홈으로</button>
+    </div>
+</body>
+</html>", "text/html");
+    }
+});
+
+// Hello World 경로
+app.MapGet("/helloworld", (string? name) => 
+{
+    string userName = string.IsNullOrEmpty(name) ? "오현우님" : name + "님";
+    return Results.Content($@"
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>Hello World</title>
+    <style>
+        body {{ font-family: Arial, sans-serif; margin: 50px; background: #f5f6fa; text-align: center; }}
+        .container {{ max-width: 600px; margin: 0 auto; }}
+        .message {{ background: #e9ecef; padding: 30px; border-radius: 15px; margin: 20px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }}
+        button {{ background: #007bff; color: white; padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer; margin: 10px; font-weight: bold; font-size: 14px; }}
+        button:hover {{ background: #0056b3; }}
+        .home-btn {{ background: #28a745; }}
+        .home-btn:hover {{ background: #218838; }}
+        h1 {{ color: #333; font-size: 36px; margin: 20px 0; }}
+    </style>
+</head>
+<body>
+    <div class='container'>
+        <div class='message'>
+            <h1>Hello, World! {userName}!</h1>
+            <p>안녕하세요! ASP.NET Core에서 인사드립니다.</p>
+            <p>현재 시간: {DateTime.Now:yyyy-MM-dd HH:mm:ss}</p>
+        </div>
+        <button class='home-btn' onclick='window.location.href=""/"";'>🏠 홈으로 돌아가기</button>
+    </div>
+</body>
+</html>", "text/html");
+});
+
+// 시간 확인 경로 - 기본 텍스트와 JSON 형식 모두 지원
+app.MapGet("/time", (string? name, string? format) => 
+{
+    string userName = string.IsNullOrEmpty(name) ? "오현우님" : name + "님";
+    
+    // JSON 형식 요청인 경우
+    if (!string.IsNullOrEmpty(format) && format.ToLower() == "json")
+    {
+        return Results.Content($@"
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>시간 확인 - JSON 형식</title>
+    <style>
+        body {{ font-family: Arial, sans-serif; margin: 50px; }}
+        .container {{ max-width: 600px; margin: 0 auto; }}
+        .json-display {{ background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 20px 0; border: 1px solid #dee2e6; }}
+        .time-info {{ background: #e9ecef; padding: 15px; border-radius: 8px; margin: 10px 0; }}
+        button {{ background: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; margin: 5px; font-size: 14px; font-weight: bold; }}
+        button:hover {{ background: #0056b3; }}
+        .back-btn {{ background: #28a745; }}
+        .back-btn:hover {{ background: #218838; }}
+        .home-btn {{ background: #6c757d; }}
+        .home-btn:hover {{ background: #545b62; }}
+        pre {{ background: #f1f3f4; padding: 15px; border-radius: 5px; overflow-x: auto; }}
+    </style>
+</head>
+<body>
+    <div class='container'>
+        <h1>🕐 시간 확인 - JSON 형식</h1>
         
         <div class='json-display'>
             <h3>JSON 형식 데이터:</h3>
-            <pre>{
-  ""message"": ""지금 시간을 확인하세요!"",
-  ""currentTime"": """ + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + @""",
-  ""timestamp"": " + DateTime.Now.Ticks + @"
-}</pre>
+            <pre>{{
+  ""message"": ""지금 시간을 확인하세요! {userName}!"",
+  ""currentTime"": ""{DateTime.Now:yyyy-MM-dd HH:mm:ss}"",
+  ""timestamp"": {DateTime.Now.Ticks},
+  ""user"": ""{userName}""
+}}</pre>
         </div>
         
         <div class='time-info'>
-            <p><strong>현재 시간:</strong> " + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") + @"</p>
-            <p><strong>타임스탬프:</strong> " + DateTime.Now.Ticks + @"</p>
-            <p><strong>요청 시간:</strong> " + DateTime.Now.ToString("yyyy년 MM월 dd일 HH시 mm분 ss초") + @"</p>
+            <p><strong>현재 시간:</strong> {DateTime.Now:yyyy-MM-dd HH:mm:ss}</p>
+            <p><strong>타임스탬프:</strong> {DateTime.Now.Ticks}</p>
+            <p><strong>요청 시간:</strong> {DateTime.Now:yyyy년 MM월 dd일 HH시 mm분 ss초}</p>
+            <p><strong>사용자:</strong> {userName}</p>
         </div>
         
-        <button onclick='location.reload()'>새로고침</button>
-        <button class='back-btn' onclick='window.location.href=""/"";'>홈으로</button>
+        <div style='text-align: center; margin: 20px 0;'>
+            <button onclick='location.reload()'>🔄 새로고침</button>
+            <button class='back-btn' onclick='window.location.href=""/time"";'>⬅️ 일반 시간 보기로</button>
+            <button class='home-btn' onclick='window.location.href=""/"";'>🏠 홈으로</button>
+        </div>
     </div>
 </body>
-</html>
-", "text/html"));
+</html>", "text/html");
+    }
+    
+    // 기본 텍스트 형식
+    return Results.Content($@"
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>시간 확인</title>
+    <style>
+        body {{ font-family: Arial, sans-serif; margin: 50px; background: #f5f6fa; }}
+        .container {{ max-width: 600px; margin: 0 auto; }}
+        .time-display {{ background: #f0f0f0; padding: 30px; border-radius: 15px; margin: 20px 0; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }}
+        .message {{ background: #e9ecef; padding: 20px; border-radius: 10px; margin: 20px 0; }}
+        button {{ background: #007bff; color: white; padding: 12px 20px; border: none; border-radius: 8px; cursor: pointer; margin: 5px; font-weight: bold; font-size: 14px; }}
+        button:hover {{ background: #0056b3; }}
+        .json-btn {{ background: #fd7e14; }}
+        .json-btn:hover {{ background: #e8681a; }}
+        .home-btn {{ background: #28a745; }}
+        .home-btn:hover {{ background: #218838; }}
+        h1, h2 {{ color: #333; }}
+        .current-time {{ font-size: 24px; font-weight: bold; color: #007bff; margin: 15px 0; }}
+    </style>
+</head>
+<body>
+    <div class='container'>
+        <h1>🕐 시간 확인</h1>
+        
+        <div class='message'>
+            <h2>지금 시간을 확인하세요! {userName}!</h2>
+        </div>
+        
+        <div class='time-display'>
+            <div class='current-time'>{DateTime.Now:yyyy-MM-dd HH:mm:ss}</div>
+            <p><strong>요청 시간:</strong> {DateTime.Now:yyyy년 MM월 dd일 HH시 mm분 ss초}</p>
+            <p><strong>타임스탬프:</strong> {DateTime.Now.Ticks}</p>
+        </div>
+        
+        <div style='text-align: center; margin: 20px 0;'>
+            <button onclick='location.reload()'>🔄 새로고침</button>
+            <button class='json-btn' onclick='window.location.href=""/time?format=json"";'>📊 JSON 형식으로 보기</button>
+            <button class='home-btn' onclick='window.location.href=""/"";'>🏠 홈으로</button>
+        </div>
+    </div>
+</body>
+</html>", "text/html");
+});
 
-// 계산기 기능 - /operator
-app.MapGet("/operator", (double? op1, double? op2, string? opr) => 
+// 계산기 기능 - /calc
+app.MapGet("/calc", (double? op1, double? op2, string? opr) => 
 {
     string resultHtml = "";
     string op1Value = op1?.ToString() ?? "";
@@ -533,7 +1010,7 @@ app.MapGet("/operator", (double? op1, double? op2, string? opr) =>
         .input-group input, .input-group select {{ width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 16px; box-sizing: border-box; }}
         .input-group input:focus, .input-group select:focus {{ border-color: #007bff; outline: none; }}
         .button-group {{ text-align: center; margin: 25px 0; }}
-        button {{ background: #007bff; color: white; padding: 12px 25px; border: none; border-radius: 8px; cursor: pointer; margin: 5px; font-size: 16px; font-weight: bold; }}
+        button {{ background: #007bff; color: white; padding: 12px 25px; border: none; border-radius: 8px; cursor: pointer; margin: 5px; font-size: 14px; font-weight: bold; }}
         button:hover {{ background: #0056b3; }}
         .calc-btn {{ background: #28a745; }}
         .calc-btn:hover {{ background: #218838; }}
@@ -649,7 +1126,7 @@ app.MapGet("/operator", (double? op1, double? op2, string? opr) =>
         </div>
         
         <div style='text-align: center; margin: 20px 0;'>
-            <button onclick='window.location.href=""/"";'>🏠 홈으로 돌아가기</button>
+            <button onclick='window.location.href=""/"";' style='font-size: 14px;'>🏠 홈으로 돌아가기</button>
         </div>
         
         <div style='background: #fff3cd; padding: 15px; border-radius: 8px; margin: 20px 0; border: 1px solid #ffeaa7;'>
