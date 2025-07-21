@@ -1,0 +1,44 @@
+@page
+@using MyConsoleApp
+@model MyConsoleApp.Pages.Memo.DeleteModel
+@{
+    ViewData["Title"] = "메모 삭제";
+}
+
+<div style="text-align: center; margin: 50px auto; max-width: 600px;">
+    @if (Model.IsDeleted)
+    {
+        <div style="background: #d4edda; border: 1px solid #c3e6cb; color: #155724; padding: 30px; border-radius: 10px; margin: 20px 0;">
+            <h2 style="color: #155724; margin-bottom: 20px;">🗑️ 삭제 완료</h2>
+            <p style="font-size: 18px; margin-bottom: 10px;">총 <strong>@(Model.DeletedCount)개</strong>의 메모가 삭제되었습니다.</p>
+            <p style="color: #6c757d;">모든 메모가 성공적으로 삭제되었습니다.</p>
+            
+            <div style="margin-top: 30px;">
+                <a href="/" style="background: #28a745; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-size: 16px; margin: 5px;">
+                    🏠 홈으로 돌아가기
+                </a>
+                <a href="/Memo/Add" style="background: #007bff; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-size: 16px; margin: 5px;">
+                    ✏️ 새 메모 추가
+                </a>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div style="background: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; padding: 30px; border-radius: 10px; margin: 20px 0;">
+            <h2 style="color: #721c24; margin-bottom: 20px;">⚠️ 메모 삭제 확인</h2>
+            <p style="font-size: 18px; margin-bottom: 15px;">현재 <strong>@(Model.CurrentMemoCount)개</strong>의 메모가 있습니다.</p>
+            <p style="color: #721c24; font-weight: bold;">정말로 모든 메모를 삭제하시겠습니까?</p>
+            <p style="color: #6c757d; margin-top: 10px;">이 작업은 되돌릴 수 없습니다.</p>
+            
+            <form method="post" style="margin-top: 30px;">
+                <button type="submit" style="background: #dc3545; color: white; padding: 12px 25px; border: none; border-radius: 5px; font-size: 16px; margin: 5px; cursor: pointer;">
+                    🗑️ 예, 모든 메모 삭제
+                </button>
+                <a href="/Memo/View" style="background: #6c757d; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-size: 16px; margin: 5px;">
+                    ❌ 취소
+                </a>
+            </form>
+        </div>
+    }
+</div>
