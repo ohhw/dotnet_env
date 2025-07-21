@@ -50,3 +50,5 @@ C:\Users\oh\Documents\dotnet_env\MyConsoleApp\obj\Debug\net9.0\refint\MyConsoleA
 C:\Users\oh\Documents\dotnet_env\MyConsoleApp\obj\Debug\net9.0\MyConsoleApp.pdb
 C:\Users\oh\Documents\dotnet_env\MyConsoleApp\obj\Debug\net9.0\MyConsoleApp.genruntimeconfig.cache
 C:\Users\oh\Documents\dotnet_env\MyConsoleApp\obj\Debug\net9.0\ref\MyConsoleApp.dll
+C:\Users\oh\Documents\dotnet_env\MyConsoleApp\obj\Debug\net9.0\MyConsoleApp.RazorAssemblyInfo.cache
+C:\Users\oh\Documents\dotnet_env\MyConsoleApp\obj\Debug\net9.0\MyConsoleApp.RazorAssemblyInfo.cs

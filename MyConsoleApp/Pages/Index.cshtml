@@ -1,0 +1,75 @@
+@page
+@model MyConsoleApp.Pages.IndexModel
+@{
+    ViewData["Title"] = "홈";
+}
+
+<h1>Hello, World! 오현우님!</h1>
+
+<div class="time-display">
+    <h2>현재 시간: @DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")</h2>
+</div>
+
+<div style="text-align: center; margin: 10px 0;">
+    <button onclick="location.reload()">시간 새로고침</button>
+    <button onclick="window.location.href='/Time'" style="background:#343a40;">🕐 시간 페이지</button>
+    <button onclick="window.location.href='/Time?format=json'" style="background:#fd7e14;">📊 JSON 형식으로 시간 보기</button>
+</div>
+
+<div class="memo-section">
+    <div class="memo-header">
+        <h3>📝 메모장 (@(Model.MemoCount)개)</h3>
+        <div>
+            <button class="add-btn" onclick="addNewMemo()">✏️ 새 메모 추가</button>
+            @if (Model.MemoCount > 0)
+            {
+                <button class="delete-btn" onclick="confirmDelete()">🗑️ 전체 삭제</button>
+            }
+        </div>
+    </div>
+    
+    <div class="memo-list">
+        @if (Model.MemoCount > 0)
+        {
+            @for (int i = 0; i < Model.Memos.Count; i++)
+            {
+                <div class="memo-item"><strong>#@(i + 1)</strong> @Model.Memos[i]</div>
+            }
+        }
+        else
+        {
+            <div class="no-memo">📝 아직 등록된 메모가 없습니다.</div>
+        }
+    </div>
+    
+    <div style="text-align: center; margin-top: 15px;">
+        <a href="/Memo/View" class="memo-link" style="background:#17a2b8;color:#fff;">📋 전체 메모 페이지로 이동</a>
+        @if (Model.MemoCount > 0)
+        {
+            <a href="/Memo/Export" style="background:#fd7e14;color:#fff;">💾 TXT 파일로 내보내기</a>
+        }
+    </div>
+</div>
+
+<div class="other-links">
+    <h3>🔗 기타 기능</h3>
+    <a href="/HelloWorld" style="background:#6c757d;color:#fff;">Hello World 페이지</a>
+    <a href="/Calculator" style="background:#28a745;color:#fff;">🧮 계산기</a>
+</div>
+
+@section Scripts {
+    <script>
+        function addNewMemo() {
+            var message = prompt('새 메모를 입력하세요:');
+            if (message && message.trim()) {
+                window.location.href = '/Memo/Add?Message=' + encodeURIComponent(message.trim());
+            }
+        }
+        
+        function confirmDelete() {
+            if (confirm('정말로 모든 메모를 삭제하시겠습니까?')) {
+                window.location.href = '/Memo/Delete';
+            }
+        }
+    </script>
+}
