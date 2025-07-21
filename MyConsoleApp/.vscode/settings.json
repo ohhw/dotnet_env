@@ -1,0 +1,29 @@
+{
+    "files.encoding": "utf8",
+    "files.autoGuessEncoding": true,
+    "files.defaultLanguage": "csharp",
+    "editor.fontFamily": "'Consolas', 'D2Coding', 'Malgun Gothic', monospace",
+    "terminal.integrated.fontFamily": "'Consolas', 'D2Coding', 'Malgun Gothic', monospace",
+    "[csharp]": {
+        "files.encoding": "utf8"
+    },
+    "[html]": {
+        "files.encoding": "utf8"
+    },
+    "[css]": {
+        "files.encoding": "utf8"
+    },
+    "[javascript]": {
+        "files.encoding": "utf8"
+    },
+    "files.associations": {
+        "*.cshtml": "html",
+        "*.razor": "html"
+    },
+    "explorer.fileNesting.enabled": true,
+    "explorer.fileNesting.expand": false,
+    "explorer.fileNesting.patterns": {
+        "*.cs": "${capture}.*.cs",
+        "*.cshtml": "${capture}.cshtml.cs"
+    }
+}
