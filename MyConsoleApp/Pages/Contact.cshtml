@@ -1,0 +1,66 @@
+@page
+@model MyConsoleApp.Pages.ContactModel
+@{
+    ViewData["Title"] = "문의하기";
+}
+
+<h1>📞 문의하기</h1>
+
+<div class="info">
+    <h3>💬 개발자에게 문의</h3>
+    <p>MyConsoleApp에 대한 문의사항이나 개선 제안이 있으시면 언제든지 연락해주세요!</p>
+</div>
+
+<div class="memo-section">
+    <h3>📧 연락처 정보</h3>
+    <div style="display: grid; gap: 15px;">
+        <div>
+            <strong>🏷️ 개발자:</strong> 오현우
+        </div>
+        <div>
+            <strong>📧 이메일:</strong> <a href="mailto:xohhwx@gmail.com">xohhwx@gmail.com</a>
+        </div>
+        <div>
+            <strong>🐙 GitHub:</strong> <a href="https://github.com/ohhw" target="_blank">https://github.com/ohhw</a>
+        </div>
+        <div>
+            <strong>📂 프로젝트:</strong> <a href="https://github.com/ohhw/dotnet_env" target="_blank">dotnet_env Repository</a>
+        </div>
+    </div>
+</div>
+
+<div class="other-links">
+    <h3>🔧 기술 지원</h3>
+    <div style="display: grid; gap: 10px;">
+        <div><strong>🛠️ 기술 스택:</strong> ASP.NET Core 9.0, C#, Razor Pages</div>
+        <div><strong>🏃‍♂️ 실행 환경:</strong> .NET 9.0 SDK</div>
+        <div><strong>🌐 포트:</strong> http://localhost:5005</div>
+    </div>
+</div>
+
+<div class="memo-section">
+    <h3>📝 자주 문의하는 내용</h3>
+    <div style="display: grid; gap: 10px;">
+        <div><strong>Q:</strong> 메모가 사라져요!</div>
+        <div><strong>A:</strong> 메모리 기반 저장으로 앱 재시작 시 초기화됩니다. TXT 파일로 내보내기를 활용해주세요.</div>
+        
+        <div style="margin-top: 15px;"><strong>Q:</strong> 계산기에 더 많은 함수를 추가할 수 있나요?</div>
+        <div><strong>A:</strong> GitHub Issues나 이메일로 제안해주시면 검토 후 추가하겠습니다!</div>
+        
+        <div style="margin-top: 15px;"><strong>Q:</strong> 모바일에서도 사용할 수 있나요?</div>
+        <div><strong>A:</strong> 네! 반응형 디자인으로 모바일 환경에서도 사용 가능합니다.</div>
+    </div>
+</div>
+
+<div class="success">
+    <h3>🚀 기여하기</h3>
+    <p>이 프로젝트는 오픈소스입니다! GitHub에서 Fork하여 개선사항을 제안해주세요.</p>
+    <button onclick="window.open('https://github.com/ohhw/dotnet_env', '_blank')" class="memo-link">GitHub에서 기여하기</button>
+</div>
+
+<div class="other-links">
+    <h3>📖 관련 문서</h3>
+    <button onclick="location.href='/Privacy'" class="memo-link">개인정보처리방침</button>
+    <button onclick="location.href='/Terms'" class="memo-link">이용약관</button>
+    <button onclick="location.href='/FAQ'" class="memo-link">자주묻는질문</button>
+</div>
