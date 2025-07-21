@@ -1,6 +1,11 @@
-﻿// ASP.NET Core 웹 애플리케이션 빌더 생성
+﻿using MyConsoleApp;
+
+// ASP.NET Core 웹 애플리케이션 빌더 생성
 // args는 명령줄 인수를 받아서 설정에 사용
 var builder = WebApplication.CreateBuilder(args);
+
+// Razor Pages 서비스 추가
+builder.Services.AddRazorPages();
 
 // 웹 호스트 설정: 모든 IP 주소(0.0.0.0)에서 5000 포트로 접근 가능하도록 설정
 // 0.0.0.0은 모든 네트워크 인터페이스를 의미 (localhost, 실제 IP 모두 접근 가능)
@@ -16,17 +21,20 @@ if (app.Environment.IsDevelopment())
     app.UseDeveloperExceptionPage();
 }
 
-// 메모 저장을 위한 리스트 (메모리에 저장)
-var memos = new List<string>();
+// 라우팅 미들웨어 추가
+app.UseRouting();
+
+// Razor Pages 매핑 추가
+app.MapRazorPages();
 
 // 기본 경로 - HTML 페이지 (메모 목록 포함)
 app.MapGet("/", () => 
 {
     // 메모 목록 HTML 생성
     var memoListHtml = "";
-    if (memos.Count > 0)
+    if (SharedData.Memos.Count > 0)
     {
-        memoListHtml = string.Join("", memos.Select((memo, index) => 
+        memoListHtml = string.Join("", SharedData.Memos.Select((memo, index) => 
             $"<div class='memo-item'><strong>#{index + 1}</strong> {memo}</div>"));
     }
     else
@@ -77,10 +85,10 @@ app.MapGet("/", () =>
         
         <div class='memo-section'>
             <div class='memo-header'>
-                <h3>📝 메모장 ({memos.Count}개)</h3>
+                <h3>📝 메모장 ({SharedData.Memos.Count}개)</h3>
                 <div>
                     <button class='add-btn' onclick='addNewMemo()'>✏️ 새 메모 추가</button>
-                    {(memos.Count > 0 ? @"<button class='delete-btn' onclick='confirmDelete()'>🗑️ 전체 삭제</button>" : "")}
+                    {(SharedData.Memos.Count > 0 ? @"<button class='delete-btn' onclick='confirmDelete()'>🗑️ 전체 삭제</button>" : "")}
                 </div>
             </div>
             
@@ -90,7 +98,7 @@ app.MapGet("/", () =>
             
             <div style='text-align: center; margin-top: 15px;'>
                 <a href='/memo/view' class='memo-link' style='background:#17a2b8;color:#fff;'>📋 전체 메모 페이지로 이동</a>
-                {(memos.Count > 0 ? @"<a href='/memo/export' style='background:#fd7e14;color:#fff;'>💾 TXT 파일로 내보내기</a>" : "")}
+                {(SharedData.Memos.Count > 0 ? @"<a href='/memo/export' style='background:#fd7e14;color:#fff;'>💾 TXT 파일로 내보내기</a>" : "")}
             </div>
         </div>
         
@@ -154,7 +162,7 @@ app.MapGet("/memo/add", (string? Message) =>
     
     // 메모 추가
     var timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-    memos.Add($"[{timestamp}] {Message}");
+    SharedData.Memos.Add($"[{timestamp}] {Message}");
     
     return Results.Content($@"
 <!DOCTYPE html>
@@ -183,7 +191,7 @@ app.MapGet("/memo/add", (string? Message) =>
             <h3>추가된 메모:</h3>
             <p><strong>[{timestamp}]</strong> {Message}</p>
         </div>
-        <p><strong>총 메모 개수:</strong> {memos.Count}개</p>
+        <p><strong>총 메모 개수:</strong> {SharedData.Memos.Count}개</p>
         <button onclick='window.location.href=""/"";'>홈으로 돌아가기</button>
         <button class='view-btn' onclick='window.location.href=""/memo/view"";'>모든 메모 보기</button>
     </div>
@@ -194,10 +202,10 @@ app.MapGet("/memo/add", (string? Message) =>
 // 메모 보기 기능 - /memo/view
 app.MapGet("/memo/view", () => 
 {
-    var memoList = string.Join("", memos.Select((memo, index) => 
+    var memoList = string.Join("", SharedData.Memos.Select((memo, index) => 
         $"<div class='memo-item'><strong>#{index + 1}</strong> {memo}</div>"));
     
-    if (memos.Count == 0)
+    if (SharedData.Memos.Count == 0)
     {
         memoList = "<div class='no-memo'>📝 등록된 메모가 없습니다.</div>";
     }
@@ -226,7 +234,7 @@ app.MapGet("/memo/view", () =>
     <div class='container'>
         <div class='header'>
             <h1>📋 메모 목록</h1>
-            <p><strong>총 메모 개수:</strong> {memos.Count}개</p>
+            <p><strong>총 메모 개수:</strong> {SharedData.Memos.Count}개</p>
             <p><strong>조회 시간:</strong> {DateTime.Now:yyyy-MM-dd HH:mm:ss}</p>
         </div>
         
@@ -235,8 +243,8 @@ app.MapGet("/memo/view", () =>
         <div style='margin-top: 30px;'>
             <button onclick='window.location.href=""/"";'>🏠 홈으로</button>
             <button class='add-btn' onclick='addNewMemo()'>✏️ 새 메모 추가</button>
-            {(memos.Count > 0 ? @"<button class='delete-btn' onclick='confirmDelete()'>🗑️ 모든 메모 삭제</button>" : "")}
-            {(memos.Count > 0 ? @"<button onclick='window.location.href=""/memo/export"";' style='background:#fd7e14;'>💾 TXT 파일로 내보내기</button>" : "")}
+            {(SharedData.Memos.Count > 0 ? @"<button class='delete-btn' onclick='confirmDelete()'>🗑️ 모든 메모 삭제</button>" : "")}
+            {(SharedData.Memos.Count > 0 ? @"<button onclick='window.location.href=""/memo/export"";' style='background:#fd7e14;'>💾 TXT 파일로 내보내기</button>" : "")}
             <button onclick='location.reload()'>🔄 새로고침</button>
         </div>
     </div>
@@ -262,8 +270,8 @@ app.MapGet("/memo/view", () =>
 // 모든 메모 삭제 기능 - /memo/delete
 app.MapGet("/memo/delete", () => 
 {
-    var deletedCount = memos.Count;
-    memos.Clear();
+    var deletedCount = SharedData.Memos.Count;
+    SharedData.Memos.Clear();
     
     return Results.Content($@"
 <!DOCTYPE html>
@@ -312,7 +320,7 @@ app.MapGet("/memo/delete", () =>
 // 메모 내보내기 페이지 - /memo/export
 app.MapGet("/memo/export", () => 
 {
-    if (memos.Count == 0)
+    if (SharedData.Memos.Count == 0)
     {
         return Results.Content(@"
 <!DOCTYPE html>
@@ -378,7 +386,7 @@ app.MapGet("/memo/export", () =>
     <div class='container'>
         <div class='header'>
             <h1>💾 메모 TXT 파일로 내보내기</h1>
-            <p>현재 {memos.Count}개의 메모를 텍스트 파일로 저장할 수 있습니다.</p>
+            <p>현재 {SharedData.Memos.Count}개의 메모를 텍스트 파일로 저장할 수 있습니다.</p>
         </div>
         
         <div class='export-section'>
@@ -412,7 +420,7 @@ app.MapGet("/memo/export", () =>
                 <div class='file-info'>
                     <h4>📁 파일 정보</h4>
                     <p><strong>생성될 파일:</strong> <span id='full-path'>C:\\Users\\oh\\Documents\\my_memos_{DateTime.Now:yyyyMMdd_HHmmss}.txt</span></p>
-                    <p><strong>예상 크기:</strong> 약 {string.Join("", memos).Length * 2} bytes</p>
+                    <p><strong>예상 크기:</strong> 약 {string.Join("", SharedData.Memos).Length * 2} bytes</p>
                     <p><strong>인코딩:</strong> UTF-8</p>
                 </div>
                 
@@ -425,7 +433,7 @@ app.MapGet("/memo/export", () =>
         
         <div class='preview-section'>
             <h3>📋 미리보기 (처음 5개 메모)</h3>
-            <div class='memo-preview'>{string.Join("\n", memos.Take(5).Select((memo, index) => $"{index + 1}. {memo}"))}{(memos.Count > 5 ? $"\n... 그 외 {memos.Count - 5}개 메모" : "")}</div>
+            <div class='memo-preview'>{string.Join("\n", SharedData.Memos.Take(5).Select((memo, index) => $"{index + 1}. {memo}"))}{(SharedData.Memos.Count > 5 ? $"\n... 그 외 {SharedData.Memos.Count - 5}개 메모" : "")}</div>
         </div>
         
         <div class='info-box'>
@@ -482,7 +490,7 @@ app.MapGet("/memo/export", () =>
 // 메모 다운로드 실행 - /memo/download
 app.MapGet("/memo/download", (string? path, string? filename, string? format) => 
 {
-    if (memos.Count == 0)
+    if (SharedData.Memos.Count == 0)
     {
         return Results.Content(@"
 <!DOCTYPE html>
@@ -549,13 +557,13 @@ app.MapGet("/memo/download", (string? path, string? filename, string? format) =>
         switch (formatType)
         {
             case "numbered":
-                content = string.Join("\n", memos.Select((memo, index) => $"{index + 1}. {memo}"));
+                content = string.Join("\n", SharedData.Memos.Select((memo, index) => $"{index + 1}. {memo}"));
                 break;
             case "timestamp":
-                content = string.Join("\n", memos);
+                content = string.Join("\n", SharedData.Memos);
                 break;
             case "simple":
-                content = string.Join("\n", memos.Select(memo => 
+                content = string.Join("\n", SharedData.Memos.Select(memo => 
                 {
                     // 타임스탬프 제거
                     var match = System.Text.RegularExpressions.Regex.Match(memo, @"^\[.*?\] (.*)$");
@@ -565,9 +573,9 @@ app.MapGet("/memo/download", (string? path, string? filename, string? format) =>
             case "detailed":
                 content = $"오현우님의 메모장 백업\n";
                 content += $"생성일시: {timestamp:yyyy-MM-dd HH:mm:ss}\n";
-                content += $"총 메모 개수: {memos.Count}개\n";
+                content += $"총 메모 개수: {SharedData.Memos.Count}개\n";
                 content += $"================================\n\n";
-                content += string.Join("\n\n", memos.Select((memo, index) => $"[메모 #{index + 1}]\n{memo}"));
+                content += string.Join("\n\n", SharedData.Memos.Select((memo, index) => $"[메모 #{index + 1}]\n{memo}"));
                 content += $"\n\n================================\n";
                 content += $"백업 완료: {timestamp:yyyy-MM-dd HH:mm:ss}";
                 break;
@@ -628,7 +636,7 @@ app.MapGet("/memo/download", (string? path, string? filename, string? format) =>
         
         <div class='stats'>
             <h4>📊 내보내기 통계</h4>
-            <p><strong>총 메모 개수:</strong> {memos.Count}개</p>
+            <p><strong>총 메모 개수:</strong> {SharedData.Memos.Count}개</p>
             <p><strong>내보내기 형식:</strong> {formatType switch 
             {
                 "numbered" => "번호 매기기",
@@ -1204,3 +1212,4 @@ app.MapGet("/calc", (double? op1, double? op2, string? opr) =>
 // 이 메소드는 블로킹되어 서버가 종료될 때까지 계속 실행됨
 // Ctrl+C로 종료 가능
 app.Run();
+

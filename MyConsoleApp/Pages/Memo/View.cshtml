@@ -1,0 +1,55 @@
+@page
+@model MyConsoleApp.Pages.Memo.ViewModel
+@{
+    ViewData["Title"] = "전체 메모";
+}
+
+<h1>📝 전체 메모 목록</h1>
+
+<div style="text-align: center; margin-bottom: 20px;">
+    <p><strong>총 메모 개수:</strong> @(Model.Memos.Count)개</p>
+</div>
+
+<div style="text-align: center; margin: 15px 0;">
+    <a href="/Memo/Add" style="background:#28a745; color:#fff; padding:8px 15px; text-decoration:none; border-radius:5px; font-size:14px;">✏️ 새 메모 추가</a>
+    @if (Model.Memos.Count > 0)
+    {
+        <button class="delete-btn" onclick="confirmDelete()" style="background:#dc3545; color:#fff; padding:8px 15px; border:none; border-radius:5px; font-size:14px; margin-left:10px; cursor:pointer;">🗑️ 모든 메모 삭제</button>
+        <a href="/Memo/Export" style="background:#fd7e14; color:#fff; padding:8px 15px; text-decoration:none; border-radius:5px; font-size:14px; margin-left:10px;">💾 TXT 파일로 내보내기</a>
+    }
+</div>
+
+<div class="memo-container" style="max-width: 800px; margin: 0 auto;">
+    @if (Model.Memos.Count > 0)
+    {
+        @for (int i = 0; i < Model.Memos.Count; i++)
+        {
+            <div class="memo-item" style="background: #f8f9fa; margin: 10px 0; padding: 15px; border-radius: 5px; border-left: 4px solid #007bff;">
+                <div style="font-weight: bold; color: #007bff; margin-bottom: 5px;">#@(i + 1)</div>
+                <div style="font-size: 16px; line-height: 1.5;">@Model.Memos[i]</div>
+            </div>
+        }
+    }
+    else
+    {
+        <div style="text-align: center; padding: 40px; background: #f8f9fa; border-radius: 10px; margin: 20px 0;">
+            <h3 style="color: #6c757d;">📝 등록된 메모가 없습니다</h3>
+            <p style="color: #6c757d; margin-top: 10px;">첫 번째 메모를 추가해보세요!</p>
+            <a href="/Memo/Add" style="background:#28a745; color:#fff; padding:10px 20px; text-decoration:none; border-radius:5px; font-size:14px; margin-top:15px; display:inline-block;">✏️ 메모 추가하기</a>
+        </div>
+    }
+</div>
+
+<div style="text-align: center; margin-top: 30px;">
+    <a href="/" style="background:#6c757d; color:#fff; padding:10px 20px; text-decoration:none; border-radius:5px; font-size:14px;">🏠 홈으로 돌아가기</a>
+</div>
+
+@section Scripts {
+    <script>
+        function confirmDelete() {
+            if (confirm('정말로 모든 메모를 삭제하시겠습니까?\n\n이 작업은 되돌릴 수 없습니다.')) {
+                window.location.href = '/Memo/Delete';
+            }
+        }
+    </script>
+}

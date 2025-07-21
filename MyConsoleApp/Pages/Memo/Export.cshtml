@@ -1,0 +1,72 @@
+@page
+@using MyConsoleApp
+@model MyConsoleApp.Pages.Memo.ExportModel
+@{
+    ViewData["Title"] = "메모 내보내기";
+}
+
+<div style="max-width: 800px; margin: 0 auto; padding: 20px;">
+    <h1>💾 메모 TXT 파일로 내보내기</h1>
+
+    @if (Model.MemoCount == 0)
+    {
+        <div style="text-align: center; padding: 40px; background: #f8f9fa; border-radius: 10px; margin: 20px 0;">
+            <h3 style="color: #6c757d;">📝 내보낼 메모가 없습니다</h3>
+            <p style="color: #6c757d; margin-top: 10px;">메모를 추가한 후 다시 시도해주세요.</p>
+            <a href="/Memo/Add" style="background:#28a745; color:#fff; padding:10px 20px; text-decoration:none; border-radius:5px; font-size:14px; margin-top:15px; display:inline-block;">✏️ 메모 추가하기</a>
+        </div>
+    }
+    else
+    {
+        <div style="background: #e3f2fd; padding: 20px; border-radius: 10px; margin: 20px 0;">
+            <h3 style="color: #1976d2; margin-bottom: 15px;">📊 내보내기 정보</h3>
+            <p>현재 @(Model.MemoCount)개의 메모를 텍스트 파일로 저장할 수 있습니다.</p>
+        </div>
+
+        <form method="post" style="background: #f8f9fa; padding: 25px; border-radius: 10px; margin: 20px 0;">
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; font-weight: bold; margin-bottom: 8px;">📁 파일 경로:</label>
+                <input asp-for="FilePath" type="text" placeholder="예: C:\temp\memos.txt 또는 D:\Documents\my_memos.txt"
+                       style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px;" required>
+                <small style="color: #6c757d;">전체 경로를 입력하세요 (확장자 .txt 포함)</small>
+            </div>
+
+            <div style="margin-bottom: 20px;">
+                <label style="display: block; font-weight: bold; margin-bottom: 8px;">📄 내보내기 형식:</label>
+                <select asp-for="ExportFormat" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px;">
+                    <option value="numbered">📝 번호 매기기 (1. 메모내용...)</option>
+                    <option value="timestamp">🕐 시간순 정렬 (시간: 메모내용...)</option>
+                    <option value="simple">📄 단순 텍스트 (메모내용만)</option>
+                    <option value="detailed">📋 상세 정보 (번호 + 시간 + 메모)</option>
+                </select>
+            </div>
+
+            <div style="text-align: center;">
+                <button type="submit" style="background: #fd7e14; color: white; padding: 12px 25px; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
+                    💾 TXT 파일로 저장
+                </button>
+            </div>
+        </form>
+
+        <div style="background: #fff3cd; border: 1px solid #ffeaa7; padding: 15px; border-radius: 8px; margin: 20px 0;">
+            <h4 style="color: #856404; margin-bottom: 10px;">📋 미리보기</h4>
+            <div style="background: white; padding: 15px; border: 1px solid #ddd; border-radius: 5px; font-family: monospace; white-space: pre-line; max-height: 200px; overflow-y: auto;">@string.Join("\n", Model.Memos.Take(5).Select((memo, index) => $"{index + 1}. {memo}"))@(Model.Memos.Count > 5 ? $"\n... 그 외 {Model.Memos.Count - 5}개 메모" : "")</div>
+        </div>
+    }
+
+    @if (!string.IsNullOrEmpty(Model.ResultMessage))
+    {
+        <div style="background: @(Model.IsSuccess ? "#d4edda" : "#f8d7da"); border: 1px solid @(Model.IsSuccess ? "#c3e6cb" : "#f5c6cb"); color: @(Model.IsSuccess ? "#155724" : "#721c24"); padding: 15px; border-radius: 8px; margin: 20px 0;">
+            <strong>@(Model.IsSuccess ? "✅" : "❌") @Model.ResultMessage</strong>
+            @if (Model.IsSuccess && !string.IsNullOrEmpty(Model.SavedFilePath))
+            {
+                <br><small>저장된 파일: @Model.SavedFilePath</small>
+            }
+        </div>
+    }
+
+    <div style="text-align: center; margin-top: 30px;">
+        <a href="/Memo/View" style="background:#17a2b8; color:#fff; padding:10px 20px; text-decoration:none; border-radius:5px; font-size:14px; margin:5px;">📋 메모 목록으로</a>
+        <a href="/" style="background:#6c757d; color:#fff; padding:10px 20px; text-decoration:none; border-radius:5px; font-size:14px; margin:5px;">🏠 홈으로 돌아가기</a>
+    </div>
+</div>

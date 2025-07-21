@@ -19,3 +19,43 @@ build_property.MSBuildProjectDirectory = C:\Users\oh\Documents\dotnet_env\MyCons
 build_property._RazorSourceGeneratorDebug = 
 build_property.EffectiveAnalysisLevelStyle = 9.0
 build_property.EnableCodeStyleSeverity = 
+
+[C:/Users/oh/Documents/dotnet_env/MyConsoleApp/Pages/Calculator/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2FsY3VsYXRvclxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/oh/Documents/dotnet_env/MyConsoleApp/Pages/HelloWorld.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSGVsbG9Xb3JsZC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/oh/Documents/dotnet_env/MyConsoleApp/Pages/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/oh/Documents/dotnet_env/MyConsoleApp/Pages/Memo/Add.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWVtb1xBZGQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/oh/Documents/dotnet_env/MyConsoleApp/Pages/Memo/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWVtb1xEZWxldGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/oh/Documents/dotnet_env/MyConsoleApp/Pages/Memo/Export.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWVtb1xFeHBvcnQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/oh/Documents/dotnet_env/MyConsoleApp/Pages/Memo/View.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWVtb1xWaWV3LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/oh/Documents/dotnet_env/MyConsoleApp/Pages/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/oh/Documents/dotnet_env/MyConsoleApp/Pages/Time/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGltZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/oh/Documents/dotnet_env/MyConsoleApp/Pages/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
