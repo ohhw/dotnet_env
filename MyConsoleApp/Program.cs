@@ -4,11 +4,18 @@
 // 웹 애플리케이션 빌더 생성
 var builder = WebApplication.CreateBuilder(args);
 
-// 서버 URL 설정 - 포트 5005로 기본 설정
-builder.WebHost.UseUrls("http://localhost:5005", "https://localhost:5006");
+// 서버 URL 설정 - 포트 5005로 기본 설정 (모든 네트워크 인터페이스에서 접근 가능)
+builder.WebHost.UseUrls("http://0.0.0.0:5005", "https://0.0.0.0:5006");
 
 // 서비스 컨테이너에 필요한 서비스 추가
 builder.Services.AddRazorPages(); // Razor Pages 지원 추가
+
+// Antiforgery 옵션 설정 (CSRF 보호)
+builder.Services.AddAntiforgery(options =>
+{
+    options.Cookie.SameSite = SameSiteMode.Lax;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+});
 
 // 웹 애플리케이션 인스턴스 생성
 var app = builder.Build();
