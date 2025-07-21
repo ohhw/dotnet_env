@@ -1,37 +1,43 @@
 @page
 @model MyConsoleApp.Pages.Memo.AddModel
 @{
-    ViewData["Title"] = "메모 추가";
+ViewData["Title"] = "메모 추가";
 }
 
 <h1>새 메모 추가</h1>
 
 @if (!string.IsNullOrEmpty(Model.Message))
 {
-    <div class="success-message" style="background:#d4edda; border:1px solid #c3e6cb; color:#155724; padding:10px; margin:10px 0; border-radius:5px;">
-        ✅ 메모가 성공적으로 추가되었습니다!
-        <br><strong>추가된 메모:</strong> @Model.Message
-    </div>
+<div class="success-message"
+    style="background:#d4edda; border:1px solid #c3e6cb; color:#155724; padding:10px; margin:10px 0; border-radius:5px;">
+    ✅ 메모가 성공적으로 추가되었습니다!
+    <br><strong>추가된 메모:</strong> @Model.Message
+</div>
 }
 
 <form method="post" style="max-width: 600px; margin: 20px auto;">
+    @Html.AntiForgeryToken()
     <div style="margin-bottom: 15px;">
         <label for="message" style="display: block; font-weight: bold; margin-bottom: 5px;">메모 내용:</label>
-        <textarea asp-for="NewMessage" id="message" name="NewMessage" rows="4" 
-                  style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px;"
-                  placeholder="메모 내용을 입력하세요..." required></textarea>
+        <textarea asp-for="NewMessage" id="message" name="NewMessage" rows="4"
+            style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px;"
+            placeholder="메모 내용을 입력하세요..." required></textarea>
     </div>
-    
+
     <div style="text-align: center;">
-        <button type="submit" style="background: #28a745; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 14px; cursor: pointer;">
+        <button type="submit"
+            style="background: #28a745; color: white; padding: 10px 20px; border: none; border-radius: 5px; font-size: 14px; cursor: pointer;">
             ✏️ 메모 추가
         </button>
-        <a href="/" style="background: #6c757d; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-size: 14px; margin-left: 10px;">
+        <a href="/"
+            style="background: #6c757d; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-size: 14px; margin-left: 10px;">
             🏠 홈으로 돌아가기
         </a>
     </div>
 </form>
 
 <div style="text-align: center; margin-top: 20px;">
-    <a href="/Memo/View" style="background:#17a2b8; color:#fff; padding:8px 15px; text-decoration:none; border-radius:5px; font-size:14px;">📋 전체 메모 보기</a>
+    <a href="/Memo/View"
+        style="background:#17a2b8; color:#fff; padding:8px 15px; text-decoration:none; border-radius:5px; font-size:14px;">📋
+        전체 메모 보기</a>
 </div>
