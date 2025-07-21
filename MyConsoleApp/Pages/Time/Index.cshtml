@@ -1,0 +1,70 @@
+@page
+@model MyConsoleApp.Pages.Time.IndexModel
+@{
+    ViewData["Title"] = "시간 정보";
+}
+
+@if (Model.Format == "json")
+{
+    <div style="font-family: monospace; background: #f8f9fa; padding: 20px; border-radius: 10px; margin: 20px auto; max-width: 600px;">
+        <pre style="margin: 0; font-size: 14px;">@Model.JsonResponse</pre>
+    </div>
+    
+    <div style="text-align: center; margin-top: 20px;">
+        <a href="/Time" style="background:#007bff; color:#fff; padding:10px 20px; text-decoration:none; border-radius:5px; font-size:14px;">🕐 일반 시간 페이지로</a>
+        <a href="/" style="background:#6c757d; color:#fff; padding:10px 20px; text-decoration:none; border-radius:5px; font-size:14px; margin-left:10px;">🏠 홈으로 돌아가기</a>
+    </div>
+}
+else
+{
+    <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+        <h1>🕐 현재 시간 정보</h1>
+        
+        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 40px; border-radius: 15px; margin: 30px 0; box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
+            <h2 style="font-size: 2.5em; margin-bottom: 10px;">@DateTime.Now.ToString("HH:mm:ss")</h2>
+            <p style="font-size: 1.3em; margin-bottom: 5px;">@DateTime.Now.ToString("yyyy년 MM월 dd일")</p>
+            <p style="font-size: 1.1em; opacity: 0.9;">@DateTime.Now.ToString("dddd", new System.Globalization.CultureInfo("ko-KR"))</p>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin: 30px 0;">
+            <div style="background: #e3f2fd; padding: 20px; border-radius: 10px; border-left: 5px solid #2196f3;">
+                <h3 style="color: #1976d2; margin-bottom: 10px;">📅 날짜 정보</h3>
+                <p><strong>전체 날짜:</strong> @DateTime.Now.ToString("yyyy-MM-dd")</p>
+                <p><strong>요일:</strong> @DateTime.Now.ToString("dddd", new System.Globalization.CultureInfo("ko-KR"))</p>
+                <p><strong>년도:</strong> @(DateTime.Now.Year)년</p>
+                <p><strong>월:</strong> @(DateTime.Now.Month)월</p>
+                <p><strong>일:</strong> @(DateTime.Now.Day)일</p>
+            </div>
+            
+            <div style="background: #f3e5f5; padding: 20px; border-radius: 10px; border-left: 5px solid #9c27b0;">
+                <h3 style="color: #7b1fa2; margin-bottom: 10px;">⏰ 시간 정보</h3>
+                <p><strong>전체 시간:</strong> @DateTime.Now.ToString("HH:mm:ss")</p>
+                <p><strong>시:</strong> @(DateTime.Now.Hour)시</p>
+                <p><strong>분:</strong> @(DateTime.Now.Minute)분</p>
+                <p><strong>초:</strong> @(DateTime.Now.Second)초</p>
+                <p><strong>밀리초:</strong> @DateTime.Now.Millisecond</p>
+            </div>
+            
+            <div style="background: #e8f5e8; padding: 20px; border-radius: 10px; border-left: 5px solid #4caf50;">
+                <h3 style="color: #388e3c; margin-bottom: 10px;">🌍 추가 정보</h3>
+                <p><strong>UTC 시간:</strong> @DateTime.UtcNow.ToString("HH:mm:ss")</p>
+                <p><strong>타임존:</strong> KST (GMT+9)</p>
+                <p><strong>유닉스 타임스탬프:</strong> @((DateTimeOffset)DateTime.Now).ToUnixTimeSeconds()</p>
+                <p><strong>ISO 8601:</strong> @DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssK")</p>
+            </div>
+        </div>
+        
+        <div style="margin: 30px 0;">
+            <button onclick="location.reload()" style="background: #ff9800; color: white; padding: 12px 25px; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; margin: 5px;">
+                🔄 시간 새로고침
+            </button>
+            <a href="/Time?format=json" style="background: #607d8b; color: white; padding: 12px 25px; text-decoration: none; border-radius: 5px; font-size: 16px; margin: 5px;">
+                📊 JSON 형식으로 보기
+            </a>
+        </div>
+        
+        <div style="text-align: center; margin-top: 30px;">
+            <a href="/" style="background:#6c757d; color:#fff; padding:10px 20px; text-decoration:none; border-radius:5px; font-size:14px;">🏠 홈으로 돌아가기</a>
+        </div>
+    </div>
+}
