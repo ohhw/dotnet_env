@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\oh\\Documents\\MyConsoleApp\\MyConsoleApp\\MyConsoleApp.csproj": {}
+    "C:\\Users\\oh\\Documents\\dotnet_env\\MyConsoleApp\\MyConsoleApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\oh\\Documents\\MyConsoleApp\\MyConsoleApp\\MyConsoleApp.csproj": {
+    "C:\\Users\\oh\\Documents\\dotnet_env\\MyConsoleApp\\MyConsoleApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\oh\\Documents\\MyConsoleApp\\MyConsoleApp\\MyConsoleApp.csproj",
+        "projectUniqueName": "C:\\Users\\oh\\Documents\\dotnet_env\\MyConsoleApp\\MyConsoleApp.csproj",
         "projectName": "MyConsoleApp",
-        "projectPath": "C:\\Users\\oh\\Documents\\MyConsoleApp\\MyConsoleApp\\MyConsoleApp.csproj",
+        "projectPath": "C:\\Users\\oh\\Documents\\dotnet_env\\MyConsoleApp\\MyConsoleApp.csproj",
         "packagesPath": "C:\\Users\\oh\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\oh\\Documents\\MyConsoleApp\\MyConsoleApp\\obj\\",
+        "outputPath": "C:\\Users\\oh\\Documents\\dotnet_env\\MyConsoleApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\oh\\AppData\\Roaming\\NuGet\\NuGet.Config"
