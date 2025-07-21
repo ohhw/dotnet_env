@@ -1,0 +1,50 @@
+@page
+@model MyConsoleApp.Pages.PrivacyModel
+@{
+    ViewData["Title"] = "개인정보처리방침";
+}
+
+<h1>📋 개인정보처리방침</h1>
+
+<div class="info">
+    <h3>🔒 개인정보 수집 및 이용</h3>
+    <p><strong>MyConsoleApp</strong>은 사용자의 개인정보를 소중히 여기며, 다음과 같이 처리합니다:</p>
+    
+    <h4>📊 수집하는 개인정보</h4>
+    <ul>
+        <li><strong>메모 데이터</strong>: 사용자가 입력한 메모 내용</li>
+        <li><strong>계산 기록</strong>: 계산기 사용 시 연산 내역</li>
+        <li><strong>접속 로그</strong>: 서비스 이용 시간 및 기록</li>
+    </ul>
+    
+    <h4>🎯 이용 목적</h4>
+    <ul>
+        <li>메모 관리 서비스 제공</li>
+        <li>계산기 기능 제공</li>
+        <li>서비스 개선 및 최적화</li>
+    </ul>
+    
+    <h4>⏰ 보유 및 이용 기간</h4>
+    <ul>
+        <li><strong>메모 데이터</strong>: 앱 재시작 시까지 (메모리 저장)</li>
+        <li><strong>계산 기록</strong>: 세션 종료 시까지</li>
+        <li><strong>접속 로그</strong>: 30일</li>
+    </ul>
+    
+    <h4>🛡️ 개인정보 보호</h4>
+    <p>본 애플리케이션은 <strong>메모리 기반 저장소</strong>를 사용하여 데이터베이스에 개인정보를 저장하지 않습니다.</p>
+    
+    <h4>📞 문의처</h4>
+    <p>개인정보 처리에 관한 문의는 <a href="/Contact">문의하기</a> 페이지를 이용해주세요.</p>
+</div>
+
+<div class="other-links">
+    <h3>📖 관련 문서</h3>
+    <button onclick="location.href='/Terms'" class="memo-link">이용약관</button>
+    <button onclick="location.href='/Contact'" class="memo-link">문의하기</button>
+    <button onclick="location.href='/FAQ'" class="memo-link">자주묻는질문</button>
+</div>
+
+<div class="warning">
+    <p><strong>⚠️ 참고사항:</strong> 이 개인정보처리방침은 학습용 프로젝트를 위한 예시이며, 실제 서비스에서는 관련 법령에 따라 작성해야 합니다.</p>
+</div>

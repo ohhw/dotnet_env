@@ -1,0 +1,122 @@
+@page
+@model MyConsoleApp.Pages.FAQModel
+@{
+    ViewData["Title"] = "자주묻는질문";
+}
+
+<h1>❓ 자주묻는질문 (FAQ)</h1>
+
+<div class="info">
+    <p>MyConsoleApp 사용 중 궁금한 점들을 모았습니다. 원하는 답변이 없다면 <a href="/Contact">문의하기</a>를 이용해주세요!</p>
+</div>
+
+<div class="memo-section">
+    <h3>🗒️ 메모 관련</h3>
+    
+    <div style="margin-bottom: 20px;">
+        <strong>Q1: 메모가 갑자기 사라졌어요!</strong>
+        <div style="margin-top: 5px; color: #666;">
+            A: MyConsoleApp은 메모리 기반 저장소를 사용합니다. 애플리케이션을 재시작하거나 서버가 재부팅되면 모든 메모가 초기화됩니다. 중요한 메모는 <strong>TXT 파일로 내보내기</strong> 기능을 활용해주세요!
+        </div>
+    </div>
+    
+    <div style="margin-bottom: 20px;">
+        <strong>Q2: TXT 파일은 어디에 저장되나요?</strong>
+        <div style="margin-top: 5px; color: #666;">
+            A: 브라우저의 다운로드 폴더에 저장됩니다. 파일명과 경로는 내보내기 시 직접 지정할 수 있습니다.
+        </div>
+    </div>
+    
+    <div style="margin-bottom: 20px;">
+        <strong>Q3: 메모에 이미지나 파일을 첨부할 수 있나요?</strong>
+        <div style="margin-top: 5px; color: #666;">
+            A: 현재는 텍스트 메모만 지원합니다. 향후 업데이트에서 파일 첨부 기능을 검토 중입니다.
+        </div>
+    </div>
+</div>
+
+<div class="memo-section">
+    <h3>🧮 계산기 관련</h3>
+    
+    <div style="margin-bottom: 20px;">
+        <strong>Q4: 어떤 수학 함수를 지원하나요?</strong>
+        <div style="margin-top: 5px; color: #666;">
+            A: 기본 사칙연산(+, -, ×, ÷)과 고급 함수들을 지원합니다:
+            <ul style="margin-top: 10px;">
+                <li>삼각함수: sin, cos, tan</li>
+                <li>로그함수: log(상용로그), ln(자연로그)</li>
+                <li>지수함수: exp(e^x)</li>
+                <li>기타: sqrt(제곱근), abs(절댓값)</li>
+                <li>상수: π(파이), e(자연상수)</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div style="margin-bottom: 20px;">
+        <strong>Q5: 계산 히스토리를 볼 수 있나요?</strong>
+        <div style="margin-top: 5px; color: #666;">
+            A: 현재는 개별 계산 결과만 표시됩니다. 히스토리 기능은 향후 업데이트에서 추가 예정입니다.
+        </div>
+    </div>
+</div>
+
+<div class="memo-section">
+    <h3>⏰ 시간 관련</h3>
+    
+    <div style="margin-bottom: 20px;">
+        <strong>Q6: 시간이 정확하지 않아요!</strong>
+        <div style="margin-top: 5px; color: #666;">
+            A: 서버의 시스템 시간을 기준으로 표시됩니다. 정확한 시간이 필요하다면 페이지를 새로고침해주세요.
+        </div>
+    </div>
+    
+    <div style="margin-bottom: 20px;">
+        <strong>Q7: 다른 시간대로 변경할 수 있나요?</strong>
+        <div style="margin-top: 5px; color: #666;">
+            A: 현재는 서버 로컬 시간과 UTC를 지원합니다. 다양한 시간대 지원은 향후 검토 중입니다.
+        </div>
+    </div>
+</div>
+
+<div class="memo-section">
+    <h3>🔧 기술적 문제</h3>
+    
+    <div style="margin-bottom: 20px;">
+        <strong>Q8: 페이지가 로드되지 않아요!</strong>
+        <div style="margin-top: 5px; color: #666;">
+            A: 다음을 확인해주세요:
+            <ul style="margin-top: 10px;">
+                <li>http://localhost:5005 주소가 정확한지 확인</li>
+                <li>서버가 실행 중인지 확인 (dotnet run)</li>
+                <li>방화벽이나 보안 프로그램이 차단하지 않는지 확인</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div style="margin-bottom: 20px;">
+        <strong>Q9: 모바일에서 사용할 수 있나요?</strong>
+        <div style="margin-top: 5px; color: #666;">
+            A: 네! 반응형 디자인으로 모바일, 태블릿에서도 최적화되어 있습니다.
+        </div>
+    </div>
+    
+    <div style="margin-bottom: 20px;">
+        <strong>Q10: 소스코드를 볼 수 있나요?</strong>
+        <div style="margin-top: 5px; color: #666;">
+            A: 네! GitHub에서 전체 소스코드를 확인할 수 있습니다: <a href="https://github.com/ohhw/dotnet_env" target="_blank">dotnet_env Repository</a>
+        </div>
+    </div>
+</div>
+
+<div class="success">
+    <h3>💡 더 궁금한 점이 있다면?</h3>
+    <p>위에서 답변을 찾지 못하셨나요? 언제든지 문의해주세요!</p>
+    <button onclick="location.href='/Contact'" class="memo-link">개발자에게 문의하기</button>
+</div>
+
+<div class="other-links">
+    <h3>📖 관련 문서</h3>
+    <button onclick="location.href='/Privacy'" class="memo-link">개인정보처리방침</button>
+    <button onclick="location.href='/Terms'" class="memo-link">이용약관</button>
+    <button onclick="location.href='/Contact'" class="memo-link">문의하기</button>
+</div>
