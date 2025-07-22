@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 
 <head>
     <meta charset="utf-8">
@@ -123,21 +123,6 @@
             border: 1px solid #d6d8db;
         }
 
-        .memo-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .other-links {
-            background: #e9ecef;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 20px 0;
-            color: #222;
-        }
-
         h1,
         h2,
         h3 {
@@ -161,26 +146,9 @@
             border: 1px solid #f5c6cb;
         }
 
-        .warning {
-            background: #fff3cd;
-            color: #856404;
-            padding: 20px;
-            border-radius: 8px;
-            border: 1px solid #ffeaa7;
-        }
-
-        .info {
-            background: #d1ecf1;
-            color: #0c5460;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid #bee5eb;
-        }
-
         /* Header Navigation Styles */
         .header {
             background: #8B0000;
-            /* 고려대학교 크림슨 색상 */
             padding: 0;
             margin: -50px -50px 30px -50px;
             box-shadow: 0 2px 4px rgba(139, 0, 0, 0.3);
@@ -189,7 +157,6 @@
         .navbar {
             display: flex;
             justify-content: space-between;
-            /* 브랜드는 왼쪽, 네비는 오른쪽 배치 */
             align-items: center;
             padding: 15px 50px;
             max-width: none;
@@ -197,14 +164,10 @@
 
         .navbar-brand {
             color: #D6C9B1 !important;
-            /* 베이지 색상 */
             text-decoration: none;
             font-size: 1.4rem;
-            /* 절반으로 줄인 폰트 사이즈 */
             font-weight: 400;
-            /* 기본 굵기 */
             background: transparent;
-            /* 투명 배경 */
             padding: 8px 16px;
             border-radius: 6px;
             transition: all 0.3s ease;
@@ -212,9 +175,7 @@
 
         .navbar-brand:hover {
             color: #E8DCC0 !important;
-            /* 호버 시 더 밝은 베이지 */
             background: transparent;
-            /* 호버 시에도 투명 배경 유지 */
         }
 
         .navbar-nav {
@@ -223,51 +184,31 @@
             margin: 0;
             padding: 0;
             gap: 40px;
-            /* 큰 폰트에 맞게 간격 증가 */
             justify-content: center;
-            /* 네비게이션 메뉴들을 가운데 정렬 */
             flex: 1;
-            /* 남은 공간을 모두 차지해서 가운데 정렬 효과 */
         }
 
         .nav-link {
             color: #D6C9B1 !important;
-            /* 새로운 베이지 톤 */
             text-decoration: none;
             padding: 8px 16px;
             border-radius: 4px;
             transition: all 0.3s ease;
             font-weight: 400;
-            /* 기본 폰트 굵기 */
             font-size: 1.4rem;
-            /* 절반으로 줄인 폰트 사이즈 */
             background: transparent;
-            /* 투명 배경 */
         }
 
         .nav-link:hover {
             color: #E8DCC0 !important;
-            /* 호버 시 더 밝은 베이지 */
             background: transparent;
-            /* 호버 시에도 투명 배경 유지 */
             transform: translateY(-1px);
-            /* 살짝 올라가는 효과 */
-        }
-
-        .nav-link.active {
-            background: transparent;
-            /* 활성 상태도 투명 배경 */
-            color: #E8DCC0 !important;
-            font-weight: bold;
-            /* 활성 메뉴만 볼드 */
         }
 
         /* Footer Styles */
         .footer {
             background: #8B0000;
-            /* 고려대학교 크림슨 색상 */
             color: #D6C9B1;
-            /* 새로운 베이지 톤 */
             padding: 30px 50px 20px 50px;
             margin: 50px -50px -50px -50px;
             margin-top: 50px;
@@ -283,89 +224,34 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            /* 수직 중앙 정렬 추가 */
             gap: 40px;
-            /* 큰 폰트에 맞게 간격 증가 */
             margin-bottom: 20px;
             flex-wrap: wrap;
         }
 
         .footer-link {
             color: #D6C9B1 !important;
-            /* 새로운 베이지 톤 */
             text-decoration: none;
-            font-size: 0.73rem;
-            /* 1/3로 줄인 폰트 사이즈 */
+            font-size: 0.9rem;
             transition: all 0.3s ease;
             padding: 8px 16px;
-            /* 패딩 증가 */
             border-radius: 4px;
             font-weight: 400;
-            /* 기본 폰트 굵기 */
             background: transparent;
-            /* 투명 배경 */
-            display: inline-flex;
-            /* 인라인 플렉스로 변경 */
-            align-items: center;
-            /* 수직 중앙 정렬 */
-            justify-content: center;
-            /* 수평 중앙 정렬 */
-            min-height: 32px;
-            /* 최소 높이 설정 */
-            line-height: 1.2;
-            /* 라인 높이 통일 */
         }
 
         .footer-link:hover {
             color: #E8DCC0 !important;
-            /* 호버 시 더 밝은 베이지 */
             background: transparent;
-            /* 호버 시에도 투명 배경 유지 */
             transform: translateY(-1px);
             font-weight: bold;
-            /* 호버 시 볼드 */
         }
 
         .footer-bottom {
             border-top: 1px solid rgba(214, 201, 177, 0.3);
-            /* 새로운 베이지 색상의 반투명 테두리 */
             padding-top: 15px;
             font-size: 0.8rem;
             color: rgba(214, 201, 177, 0.8);
-            /* 반투명 베이지 */
-        }
-
-        /* Mobile Responsive */
-        @@media (max-width: 768px) {
-            .navbar {
-                flex-direction: column;
-                gap: 15px;
-                padding: 15px 20px;
-            }
-
-            .navbar-nav {
-                gap: 15px;
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-
-            .footer {
-                padding: 20px;
-                margin: 30px -20px -20px -20px;
-            }
-
-            .footer-links {
-                flex-direction: column;
-                gap: 10px;
-            }
-
-            body {
-                margin: 20px;
-            }
-
-            .header {
-                margin: -20px -20px 20px -20px;
-            }
         }
     </style>
 </head>
@@ -376,16 +262,11 @@
         <nav class="navbar">
             <a href="/" class="navbar-brand">.NET TEST</a>
             <ul class="navbar-nav">
-                <li><a href="/" class="nav-link @(ViewContext.RouteData.Values[" page"]?.ToString()=="/Index" ||
-                        ViewContext.RouteData.Values["page"]==null ? "active" : "" )">🏠 Home</a></li>
-                <li><a href="/Memo/Add" class="nav-link @(ViewContext.RouteData.Values["
-                        page"]?.ToString()?.Contains("/Memo")==true ? "active" : "" )">📝 Memo</a></li>
-                <li><a href="/Time" class="nav-link @(ViewContext.RouteData.Values[" page"]?.ToString()=="/Time"
-                        ? "active" : "" )">⏰ Time</a></li>
-                <li><a href="/Calculator" class="nav-link @(ViewContext.RouteData.Values["
-                        page"]?.ToString()=="/Calculator" ? "active" : "" )">🧮 Calculator</a></li>
-                <li><a href="/HelloWorld" class="nav-link @(ViewContext.RouteData.Values["
-                        page"]?.ToString()=="/HelloWorld" ? "active" : "" )">ℹ️ About</a></li>
+                <li><a href="/" class="nav-link">🏠 Home</a></li>
+                <li><a href="/Memo/Add" class="nav-link">📝 Memo</a></li>
+                <li><a href="/Time" class="nav-link">⏰ Time</a></li>
+                <li><a href="/Calculator" class="nav-link">🧮 Calculator</a></li>
+                <li><a href="/HelloWorld" class="nav-link">ℹ️ About</a></li>
             </ul>
         </nav>
     </header>
