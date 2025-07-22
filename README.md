@@ -44,7 +44,7 @@
 
 > **🔥 개발 환경**: `dotnet watch run` 명령어를 사용하면 파일 변경 시 자동으로 빌드되고 브라우저가 새로고침됩니다. 실시간 개발에 최적화!
 
-> **🌐 전용 포트**: 이 애플리케이션은 **포트 5005**에서 실행됩니다. 브라우저에서 `http://localhost:5005`로 접속하세요.
+> **🌐 전용 포트**: 이 애플리케이션은 **HTTP 포트 5005** 및 **HTTPS 포트 7005**에서 실행됩니다. 기본적으로 `http://localhost:5005`로 접속하세요. SSL 개발 인증서가 설정된 경우 `https://localhost:7005`도 사용 가능합니다.
 
 > **💾 메모리 기반 저장소**: 이 애플리케이션은 메모리 기반 저장소를 사용하므로 애플리케이션 재시작 시 모든 데이터가 초기화됩니다. 중요한 메모는 **TXT 파일 내보내기** 기능을 활용해주세요!
 
@@ -52,7 +52,8 @@
 
 | 항목 | 링크 |
 |------|------|
-| ** 라이브 데모** | http://localhost:5005 (로컬 실행 시) |
+| **🔗 HTTP 데모** | http://localhost:5005 (로컬 실행 시) |
+| **🔒 HTTPS 데모** | https://localhost:7005 (SSL 설정 시) |
 
 ---
 
@@ -123,19 +124,39 @@
    ```
 
 5. **브라우저에서 접속**:
+   
+   **🌐 HTTP 접속 (기본)**:
    ```
    http://localhost:5005
    ```
+   
+   **🔒 HTTPS 접속 (개발용 SSL)**:
+   ```
+   https://localhost:7005
+   ```
+   
+   **📱 네트워크 접속** (같은 네트워크의 다른 기기에서):
+   ```
+   http://[당신의IP주소]:5005
+   https://[당신의IP주소]:7005
+   ```
+   
+   **💡 접속 팁**:
+   - 기본적으로 **HTTP 5005번 포트**를 사용합니다
+   - 개발용 SSL 인증서가 설정된 경우 **HTTPS 7005번 포트**도 사용 가능
+   - 모바일이나 다른 기기에서 테스트할 때는 본인 컴퓨터의 IP 주소 사용
+   - Windows 방화벽에서 해당 포트를 허용해야 외부 접속 가능
 
 ##  연락처 & 링크
 
 | 항목 | 링크 |
 |------|------|
-| ** GitHub** | [https://github.com/ohhw/dotnet_env](https://github.com/ohhw/dotnet_env) |
-| ** 이메일** | xohhwx@gmail.com |
-| ** 개발자** | 오현우 |
-| ** 프로젝트** | .NET 학습 & Razor Pages 실습 |
-| ** 라이브 데모** | http://localhost:5005 (로컬 실행 시) |
+| **🌐 GitHub** | [https://github.com/ohhw/dotnet_env](https://github.com/ohhw/dotnet_env) |
+| **📧 이메일** | xohhwx@gmail.com |
+| **👨‍💻 개발자** | 오현우 |
+| **🚀 프로젝트** | .NET 학습 & Razor Pages 실습 |
+| **🔗 HTTP 데모** | http://localhost:5005 (로컬 실행 시) |
+| **🔒 HTTPS 데모** | https://localhost:7005 (SSL 설정 시) |
 
 ---
 
