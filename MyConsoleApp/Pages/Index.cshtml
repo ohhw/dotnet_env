@@ -4,7 +4,33 @@
     ViewData["Title"] = "홈";
 }
 
-<h1>Hello, World! 오현우님!</h1>
+<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 15px; margin-bottom: 30px; text-align: center; box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
+    <h1 style="margin-bottom: 20px; font-size: 2.2em;">Hello, World! @(Model.UserName)님!</h1>
+    
+    @if (Model.UserName == "방문자")
+    {
+        <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-top: 20px;">
+            <p style="margin-bottom: 15px; font-size: 1.1em;">👋 안녕하세요! 이름을 알려주시면 더 친근하게 인사드릴게요!</p>
+            <form method="post" style="display: flex; gap: 10px; justify-content: center; align-items: center; flex-wrap: wrap;">
+                @Html.AntiForgeryToken()
+                <input type="text" name="userName" placeholder="이름을 입력해주세요" required 
+                       style="padding: 10px 15px; border: none; border-radius: 5px; font-size: 14px; min-width: 200px; color: #333;">
+                <button type="submit" style="background: #28a745; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                    ✨ 인사하기
+                </button>
+            </form>
+        </div>
+    }
+    else
+    {
+        <p style="font-size: 1.1em; opacity: 0.9;">환영합니다! 오늘도 좋은 하루 되세요! 🌟</p>
+        <div style="margin-top: 15px;">
+            <a href="/" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 15px; text-decoration: none; border-radius: 5px; font-size: 14px;">
+                👤 다른 이름으로 변경
+            </a>
+        </div>
+    }
+</div>
 
 <div class="time-display">
     <h2>현재 시간: @DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")</h2>
