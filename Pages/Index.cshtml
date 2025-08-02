@@ -4,93 +4,171 @@
     ViewData["Title"] = "홈";
 }
 
-<div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 15px; margin-bottom: 30px; text-align: center; box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
-    <h1 style="margin-bottom: 20px; font-size: 2.2em;">Hello, World! @(Model.UserName)님!</h1>
+<!-- 메인 컨텐츠를 좌우로 분할 -->
+<div class="grid-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px;">
     
-    @if (Model.UserName == "방문자")
-    {
-        <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-top: 20px;">
-            <p style="margin-bottom: 15px; font-size: 1.1em;">👋 안녕하세요! 이름을 알려주시면 더 친근하게 인사드릴게요!</p>
-            <form method="post" style="display: flex; gap: 10px; justify-content: center; align-items: center; flex-wrap: wrap;">
-                @Html.AntiForgeryToken()
-                <input type="text" name="userName" placeholder="이름을 입력해주세요" required 
-                       style="padding: 10px 15px; border: none; border-radius: 5px; font-size: 14px; min-width: 200px; color: #333;">
-                <button type="submit" style="background: #28a745; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
-                    ✨ 인사하기
-                </button>
-            </form>
+    <!-- 좌측 영역: 기존 컨텐츠 -->
+    <div style="background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+        
+        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 30px; border-radius: 15px; margin-bottom: 30px; text-align: center; box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
+            <h1 style="margin-bottom: 20px; font-size: 2.2em;">Hello, World! @(Model.UserName)님!</h1>
+            
+            @if (Model.UserName == "방문자")
+            {
+                <div style="background: rgba(255,255,255,0.1); padding: 20px; border-radius: 10px; margin-top: 20px;">
+                    <p style="margin-bottom: 15px; font-size: 1.1em;">👋 안녕하세요! 이름을 알려주시면 더 친근하게 인사드릴게요!</p>
+                    <form method="post" style="display: flex; gap: 10px; justify-content: center; align-items: center; flex-wrap: wrap;">
+                        @Html.AntiForgeryToken()
+                        <input type="text" name="userName" placeholder="이름을 입력해주세요" required 
+                               style="padding: 10px 15px; border: none; border-radius: 5px; font-size: 14px; min-width: 200px; color: #333;">
+                        <button type="submit" style="background: #28a745; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                            ✨ 인사하기
+                        </button>
+                    </form>
+                </div>
+            }
+            else
+            {
+                <p style="font-size: 1.1em; opacity: 0.9;">환영합니다! 오늘도 좋은 하루 되세요! 🌟</p>
+                <div style="margin-top: 15px;">
+                    <a href="/" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 15px; text-decoration: none; border-radius: 5px; font-size: 14px;">
+                        👤 다른 이름으로 변경
+                    </a>
+                </div>
+            }
         </div>
-    }
-    else
-    {
-        <p style="font-size: 1.1em; opacity: 0.9;">환영합니다! 오늘도 좋은 하루 되세요! 🌟</p>
-        <div style="margin-top: 15px;">
-            <a href="/" style="background: rgba(255,255,255,0.2); color: white; padding: 8px 15px; text-decoration: none; border-radius: 5px; font-size: 14px;">
-                👤 다른 이름으로 변경
+
+        <div class="time-display">
+            <h2>현재 시간: @DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")</h2>
+        </div>
+
+        <div style="text-align: center; margin: 10px 0;">
+            <button onclick="location.reload()">시간 새로고침</button>
+            <button onclick="window.location.href='/Time'" style="background:#343a40;">🕐 시간 페이지</button>
+            <button onclick="window.location.href='/Time?format=json'" style="background:#fd7e14;">📊 JSON 형식으로 시간 보기</button>
+        </div>
+
+        <div class="memo-section">
+            <div class="memo-header">
+                <h3>📝 메모장 (@(Model.MemoCount)개)</h3>
+                <div>
+                    <button class="add-btn" onclick="addNewMemo()">✏️ 새 메모 추가</button>
+                    @if (Model.MemoCount > 0)
+                    {
+                        <button class="delete-btn" onclick="confirmDelete()">🗑️ 전체 삭제</button>
+                    }
+                </div>
+            </div>
+            
+            <div class="memo-list">
+                @if (Model.MemoCount > 0)
+                {
+                    @for (int i = 0; i < Model.Memos.Count; i++)
+                    {
+                        <div class="memo-item"><strong>#@(i + 1)</strong> @Model.Memos[i]</div>
+                    }
+                }
+                else
+                {
+                    <div class="no-memo">📝 아직 등록된 메모가 없습니다.</div>
+                }
+            </div>
+            
+            <div style="text-align: center; margin-top: 15px;">
+                <a href="/Memo/View" class="memo-link" style="background:#17a2b8;color:#fff;">📋 전체 메모 페이지로 이동</a>
+                @if (Model.MemoCount > 0)
+                {
+                    <a href="/Memo/Export" style="background:#fd7e14;color:#fff;">💾 TXT 파일로 내보내기</a>
+                }
+            </div>
+        </div>
+
+        <div class="other-links">
+            <h3>🔗 기타 기능</h3>
+            <a href="/HelloWorld" style="background:#6c757d;color:#fff;">Hello World 페이지</a>
+            <a href="/Calculator" style="background:#28a745;color:#fff;">🧮 계산기</a>
+        </div>
+        
+    </div>
+
+    <!-- 우측 영역: 지도 서비스 -->
+    <div style="background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
+        
+        <div style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; padding: 25px; border-radius: 15px; margin-bottom: 25px; text-align: center; box-shadow: 0 8px 32px rgba(0,0,0,0.1);">
+            <h2 style="margin-bottom: 15px; font-size: 1.8em;">🗺️ 지도 서비스</h2>
+            <p style="font-size: 1em; opacity: 0.9; margin-bottom: 20px;">구글, 네이버, 카카오 지도를 한 번에!</p>
+            <a href="/Map" style="background: white; color: #11998e; padding: 12px 25px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block; transition: all 0.3s ease;">
+                🌍 상세 페이지로 이동
             </a>
         </div>
-    }
-</div>
 
-<div class="time-display">
-    <h2>현재 시간: @DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")</h2>
-</div>
+        <!-- 빠른 지도 접근 -->
+        <div style="display: grid; grid-template-columns: 1fr; gap: 15px; margin-bottom: 25px;">
+            
+            <!-- 구글 지도 -->
+            <div style="background: #4285f4; color: white; padding: 20px; border-radius: 12px; text-align: center; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                <div style="font-size: 2em; margin-bottom: 10px;">🌍</div>
+                <h4 style="margin-bottom: 10px; font-size: 1.1em;">Google 지도</h4>
+                <a href="https://maps.google.com" target="_blank" 
+                   style="background: white; color: #4285f4; padding: 8px 16px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 14px;">
+                    바로 열기
+                </a>
+            </div>
 
-<div style="text-align: center; margin: 10px 0;">
-    <button onclick="location.reload()">시간 새로고침</button>
-    <button onclick="window.location.href='/Time'" style="background:#343a40;">🕐 시간 페이지</button>
-    <button onclick="window.location.href='/Time?format=json'" style="background:#fd7e14;">📊 JSON 형식으로 시간 보기</button>
-</div>
+            <!-- 네이버 지도 -->
+            <div style="background: #03c75a; color: white; padding: 20px; border-radius: 12px; text-align: center; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                <div style="font-size: 2em; margin-bottom: 10px;">🇰🇷</div>
+                <h4 style="margin-bottom: 10px; font-size: 1.1em;">네이버 지도</h4>
+                <a href="https://map.naver.com" target="_blank" 
+                   style="background: white; color: #03c75a; padding: 8px 16px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 14px;">
+                    바로 열기
+                </a>
+            </div>
 
-<div class="memo-section">
-    <div class="memo-header">
-        <h3>📝 메모장 (@(Model.MemoCount)개)</h3>
-        <div>
-            <button class="add-btn" onclick="addNewMemo()">✏️ 새 메모 추가</button>
-            @if (Model.MemoCount > 0)
-            {
-                <button class="delete-btn" onclick="confirmDelete()">🗑️ 전체 삭제</button>
-            }
+            <!-- 카카오맵 -->
+            <div style="background: #fee500; color: #3c1e1e; padding: 20px; border-radius: 12px; text-align: center; transition: transform 0.3s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'">
+                <div style="font-size: 2em; margin-bottom: 10px;">🟡</div>
+                <h4 style="margin-bottom: 10px; font-size: 1.1em;">카카오맵</h4>
+                <a href="https://map.kakao.com" target="_blank" 
+                   style="background: #3c1e1e; color: #fee500; padding: 8px 16px; text-decoration: none; border-radius: 6px; font-weight: bold; font-size: 14px;">
+                    바로 열기
+                </a>
+            </div>
+
         </div>
+
+        <!-- 빠른 검색 -->
+        <div style="background: #f8f9fa; padding: 20px; border-radius: 12px; border: 1px solid #e9ecef;">
+            <h4 style="color: #333; margin-bottom: 15px; text-align: center;">🔍 빠른 장소 검색</h4>
+            <div style="margin-bottom: 15px;">
+                <input type="text" id="quickSearchLocation" placeholder="장소를 입력하세요" 
+                       style="width: 100%; padding: 10px; border: 2px solid #e9ecef; border-radius: 6px; font-size: 14px; box-sizing: border-box;">
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
+                <button onclick="quickSearchGoogle()" style="background: #4285f4; color: white; padding: 8px 12px; border: none; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: bold;">
+                    Google
+                </button>
+                <button onclick="quickSearchNaver()" style="background: #03c75a; color: white; padding: 8px 12px; border: none; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: bold;">
+                    네이버
+                </button>
+                <button onclick="quickSearchKakao()" style="background: #fee500; color: #3c1e1e; padding: 8px 12px; border: none; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: bold;">
+                    카카오
+                </button>
+            </div>
+        </div>
+
     </div>
     
-    <div class="memo-list">
-        @if (Model.MemoCount > 0)
-        {
-            @for (int i = 0; i < Model.Memos.Count; i++)
-            {
-                <div class="memo-item"><strong>#@(i + 1)</strong> @Model.Memos[i]</div>
-            }
-        }
-        else
-        {
-            <div class="no-memo">📝 아직 등록된 메모가 없습니다.</div>
-        }
-    </div>
-    
-    <div style="text-align: center; margin-top: 15px;">
-        <a href="/Memo/View" class="memo-link" style="background:#17a2b8;color:#fff;">📋 전체 메모 페이지로 이동</a>
-        @if (Model.MemoCount > 0)
-        {
-            <a href="/Memo/Export" style="background:#fd7e14;color:#fff;">💾 TXT 파일로 내보내기</a>
-        }
-    </div>
 </div>
 
-<!-- 지도 서비스 섹션 -->
-<div style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); padding: 20px; border-radius: 15px; margin: 20px 0; text-align: center; box-shadow: 0 4px 15px rgba(17, 153, 142, 0.3);">
-    <h3 style="color: white; margin-bottom: 15px;">🗺️ 지도 서비스</h3>
-    <p style="color: white; opacity: 0.9; margin-bottom: 20px;">구글, 네이버, 카카오 지도를 한 번에!</p>
-    <a href="/Map" style="background: white; color: #11998e; padding: 12px 25px; text-decoration: none; border-radius: 8px; font-weight: bold; display: inline-block; transition: all 0.3s ease;">
-        🌍 지도 서비스 이용하기
-    </a>
-</div>
-
-<div class="other-links">
-    <h3>🔗 기타 기능</h3>
-    <a href="/HelloWorld" style="background:#6c757d;color:#fff;">Hello World 페이지</a>
-    <a href="/Calculator" style="background:#28a745;color:#fff;">🧮 계산기</a>
-</div>
+<!-- 반응형 처리 -->
+<style>
+    @media (max-width: 768px) {
+        .grid-container {
+            grid-template-columns: 1fr !important;
+        }
+    }
+</style>
 
 @section Scripts {
     <script>
@@ -106,5 +184,42 @@
                 window.location.href = '/Memo/Delete';
             }
         }
+
+        // 빠른 검색 기능
+        function quickSearchGoogle() {
+            const query = document.getElementById('quickSearchLocation').value;
+            if (query.trim()) {
+                window.open(`https://maps.google.com/maps?q=${encodeURIComponent(query)}`, '_blank');
+            } else {
+                alert('검색할 장소를 입력해주세요!');
+            }
+        }
+
+        function quickSearchNaver() {
+            const query = document.getElementById('quickSearchLocation').value;
+            if (query.trim()) {
+                window.open(`https://map.naver.com/v5/search/${encodeURIComponent(query)}`, '_blank');
+            } else {
+                alert('검색할 장소를 입력해주세요!');
+            }
+        }
+
+        function quickSearchKakao() {
+            const query = document.getElementById('quickSearchLocation').value;
+            if (query.trim()) {
+                window.open(`https://map.kakao.com/?q=${encodeURIComponent(query)}`, '_blank');
+            } else {
+                alert('검색할 장소를 입력해주세요!');
+            }
+        }
+
+        // 엔터키로 검색 (기본 구글 검색)
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('quickSearchLocation').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    quickSearchGoogle();
+                }
+            });
+        });
     </script>
 }
