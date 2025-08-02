@@ -1,14 +1,21 @@
 ﻿// ASP.NET Core 웹 애플리케이션의 메인 진입점
 // 이 파일은 애플리케이션의 구성과 시작을 담당합니다.
 
+using App.Services;
+
 // 웹 애플리케이션 빌더 생성
 var builder = WebApplication.CreateBuilder(args);
 
-// 서버 URL 설정 - 포트 5005 단일 HTTP 포트로 설정 (모든 네트워크 인터페이스에서 접근 가능)
-builder.WebHost.UseUrls("http://0.0.0.0:5005");
+// 서버 URL 설정 - 포트 5050 고정 (하드코딩)
+builder.WebHost.UseUrls("http://0.0.0.0:5050");
 
 // 서비스 컨테이너에 필요한 서비스 추가
 builder.Services.AddRazorPages(); // Razor Pages 지원 추가
+
+// 비즈니스 서비스 등록
+builder.Services.AddScoped<MemoService>();
+builder.Services.AddScoped<TimeService>();
+builder.Services.AddScoped<MapService>();
 
 // Antiforgery 옵션 설정 (CSRF 보호)
 builder.Services.AddAntiforgery(options =>

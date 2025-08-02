@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace MyConsoleApp.Pages.Map
+namespace App.Pages.Map
 {
     public class IndexModel : PageModel
     {

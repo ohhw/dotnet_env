@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace MyConsoleApp.Pages
+namespace App.Pages
 {
     public class IndexModel : PageModel
     {
@@ -26,8 +26,16 @@ namespace MyConsoleApp.Pages
             }
         }
         
-        public IActionResult OnPost(string userName)
+        public IActionResult OnPost(string userName, string newMemo, string action)
         {
+            // 메모 추가 기능
+            if (action == "add" && !string.IsNullOrEmpty(newMemo))
+            {
+                SharedData.AddMemo(newMemo);
+                return RedirectToPage("/Index");
+            }
+            
+            // 사용자명 설정 기능
             if (!string.IsNullOrEmpty(userName))
             {
                 return RedirectToPage("/Index", new { name = userName });
