@@ -4,8 +4,8 @@
 // 웹 애플리케이션 빌더 생성
 var builder = WebApplication.CreateBuilder(args);
 
-// 서버 URL 설정 - 포트 5005로 기본 설정 (모든 네트워크 인터페이스에서 접근 가능)
-builder.WebHost.UseUrls("http://0.0.0.0:5005", "https://0.0.0.0:5006");
+// 서버 URL 설정 - 포트 5005 단일 HTTP 포트로 설정 (모든 네트워크 인터페이스에서 접근 가능)
+builder.WebHost.UseUrls("http://0.0.0.0:5005");
 
 // 서비스 컨테이너에 필요한 서비스 추가
 builder.Services.AddRazorPages(); // Razor Pages 지원 추가
@@ -25,12 +25,7 @@ if (!app.Environment.IsDevelopment())
 {
     // 운영 환경에서의 예외 처리
     app.UseExceptionHandler("/Error");
-    // 기본 HSTS 값은 30일입니다.
-    app.UseHsts();
 }
-
-// HTTPS 리디렉션 사용
-app.UseHttpsRedirection();
 
 // 정적 파일 제공 (CSS, JS, 이미지 등)
 app.UseStaticFiles();
