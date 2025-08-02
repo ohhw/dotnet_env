@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Text;
 
-namespace MyConsoleApp.Pages.Memo
+namespace App.Pages.Memo
 {
     public class ExportModel : PageModel
     {

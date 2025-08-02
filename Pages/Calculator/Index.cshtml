@@ -1,10 +1,10 @@
 @page
-@model MyConsoleApp.Pages.Calculator.IndexModel
+@model App.Pages.Calculator.IndexModel
 @{
 ViewData["Title"] = "계산기";
 }
 
-<h1>🧮 고급 과학 계산기</h1>
+<h2 style="text-align: center; color: #333; margin-bottom: 30px;">🧮 고급 과학 계산기</h2>
 
 @if (!string.IsNullOrEmpty(Model.ErrorMessage))
 {
@@ -25,70 +25,107 @@ ViewData["Title"] = "계산기";
 <div style="max-width: 800px; margin: 0 auto;">
     <form method="get" style="background: #f8f9fa; padding: 25px; border-radius: 10px; margin: 20px 0;">
         <h3>🔢 기본 계산</h3>
-        <div style="display: flex; gap: 15px; margin-bottom: 15px; align-items: flex-start;">
-            <div style="flex: 1;">
-                <label style="display: block; font-weight: bold; margin-bottom: 5px;">첫 번째 수:</label>
-                <input name="op1" type="number" step="any" value="@Model.Op1"
-                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px;"
-                    placeholder="숫자 입력">
+        <div style="display: grid; grid-template-columns: 1fr 150px 1fr; gap: 20px; margin-bottom: 15px;">
+            <!-- 좌측: 입력값들 -->
+            <div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display: block; font-weight: bold; margin-bottom: 5px;">첫 번째 수:</label>
+                    <input name="op1" type="number" step="any" value="@Model.Op1"
+                        style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px; box-sizing: border-box;"
+                        placeholder="숫자 입력">
+                </div>
+                <div>
+                    <label style="display: block; font-weight: bold; margin-bottom: 5px;">두 번째 수:</label>
+                    <input name="op2" type="number" step="any" value="@Model.Op2"
+                        style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px; box-sizing: border-box;"
+                        placeholder="숫자 입력">
+                </div>
             </div>
-            <div style="flex: 1; text-align: center;">
-                <label style="display: block; font-weight: bold; margin-bottom: 5px;">연산자:</label>
+            
+            <!-- 중간: 연산자 및 계산 버튼 -->
+            <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                <label style="display: block; font-weight: bold; margin-bottom: 5px; text-align: center;">연산자:</label>
                 <select name="opr"
-                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px;">
-                    <option value="+" @(Model.Opr=="+" ? "selected" : "" )>+ 더하기</option>
-                    <option value="-" @(Model.Opr=="-" ? "selected" : "" )>- 빼기</option>
-                    <option value="*" @(Model.Opr=="*" ? "selected" : "" )">× 곱하기</option>
-                    <option value="/" @(Model.Opr=="/" ? "selected" : "" )">÷ 나누기</option>
-                    <option value="%" @(Model.Opr=="%" ? "selected" : "" )">% 나머지</option>
-                    <option value="**" @(Model.Opr=="**" ? "selected" : "" )">^ 거듭제곱</option>
+                    style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px; margin-bottom: 15px;">
+                    <option value="+" @(Model.Opr=="+" ? "selected" : "" )>+</option>
+                    <option value="-" @(Model.Opr=="-" ? "selected" : "" )>-</option>
+                    <option value="*" @(Model.Opr=="*" ? "selected" : "" )">×</option>
+                    <option value="/" @(Model.Opr=="/" ? "selected" : "" )">÷</option>
+                    <option value="%" @(Model.Opr=="%" ? "selected" : "" )">%</option>
+                    <option value="**" @(Model.Opr=="**" ? "selected" : "" )">^</option>
                 </select>
+                <button type="submit"
+                    style="background: #007bff; color: white; padding: 12px 20px; border: none; border-radius: 5px; font-size: 14px; cursor: pointer; width: 100%;">
+                    🧮 계산
+                </button>
             </div>
-            <div style="flex: 1;">
-                <label style="display: block; font-weight: bold; margin-bottom: 5px;">두 번째 수:</label>
-                <input name="op2" type="number" step="any" value="@Model.Op2"
-                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px;"
-                    placeholder="숫자 입력">
+            
+            <!-- 우측: 계산 히스토리 -->
+            <div>
+                <label style="display: block; font-weight: bold; margin-bottom: 5px;">계산 히스토리:</label>
+                <div style="background: #fff; border: 1px solid #ddd; border-radius: 5px; padding: 10px; height: 120px; overflow-y: auto; font-family: monospace;">
+                    @if (Model.HasResult)
+                    {
+                        <div style="color: #28a745; margin-bottom: 5px;">
+                            @Model.Op1 @Model.Opr @Model.Op2 = @Model.ResultValue
+                        </div>
+                    }
+                    <div style="color: #666; font-size: 12px;">이전 계산 결과가 여기에 표시됩니다.</div>
+                </div>
             </div>
-        </div>
-        <div style="text-align: center;">
-            <button type="submit"
-                style="background: #007bff; color: white; padding: 12px 25px; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
-                🧮 계산하기
-            </button>
         </div>
     </form>
 
     <form method="get" style="background: #e8f5e8; padding: 25px; border-radius: 10px; margin: 20px 0;">
         <h3>📐 고급 수학 함수</h3>
-        <div
-            style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 15px; align-items: flex-start;">
+        <div style="display: grid; grid-template-columns: 1fr 150px 1fr; gap: 20px; margin-bottom: 15px;">
+            <!-- 좌측: 함수 선택 + 참고사항 -->
             <div>
                 <label style="display: block; font-weight: bold; margin-bottom: 5px;">함수:</label>
                 <select name="func"
-                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px;">
-                    <option value="sin" @(Model.Func=="sin" ? "selected" : "" )>📐 사인 (sin)</option>
-                    <option value="cos" @(Model.Func=="cos" ? "selected" : "" )>📐 코사인 (cos)</option>
-                    <option value="tan" @(Model.Func=="tan" ? "selected" : "" )">📐 탄젠트 (tan)</option>
-                    <option value="log" @(Model.Func=="log" ? "selected" : "" )">📊 상용로그 (log10)</option>
-                    <option value="ln" @(Model.Func=="ln" ? "selected" : "" )">📊 자연로그 (ln)</option>
-                    <option value="sqrt" @(Model.Func=="sqrt" ? "selected" : "" )">🔢 제곱근 (√)</option>
-                    <option value="abs" @(Model.Func=="abs" ? "selected" : "" )">🔢 절댓값 (|x|)</option>
-                    <option value="exp" @(Model.Func=="exp" ? "selected" : "" )">🔢 지수함수 (e^x)</option>
+                    style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px; margin-bottom: 15px;">
+                    <option value="sin" @(Model.Func=="sin" ? "selected" : "" )>📐 sin</option>
+                    <option value="cos" @(Model.Func=="cos" ? "selected" : "" )>📐 cos</option>
+                    <option value="tan" @(Model.Func=="tan" ? "selected" : "" )>📐 tan</option>
+                    <option value="log" @(Model.Func=="log" ? "selected" : "" )>📊 log10</option>
+                    <option value="ln" @(Model.Func=="ln" ? "selected" : "" )">📊 ln</option>
+                    <option value="sqrt" @(Model.Func=="sqrt" ? "selected" : "" )>🔢 √</option>
+                    <option value="abs" @(Model.Func=="abs" ? "selected" : "" )>🔢 |x|</option>
+                    <option value="exp" @(Model.Func=="exp" ? "selected" : "" )>🔢 e^x</option>
                 </select>
+                <div style="background: #f8f9fa; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 12px;">
+                    <strong>참고:</strong><br>
+                    • 삼각함수는 라디안 단위<br>
+                    • 로그는 양수만 입력<br>
+                    • 제곱근은 0 이상
+                </div>
             </div>
-            <div>
-                <label style="display: block; font-weight: bold; margin-bottom: 5px;">입력값:</label>
+            
+            <!-- 중간: 입력값 + 계산 버튼 -->
+            <div style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                <label style="display: block; font-weight: bold; margin-bottom: 5px; text-align: center;">입력값:</label>
                 <input name="value" type="number" step="any" value="@Model.Value"
-                    style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px;"
+                    style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px; font-size: 14px; margin-bottom: 15px;"
                     placeholder="함수 입력값">
+                <button type="submit"
+                    style="background: #28a745; color: white; padding: 12px 20px; border: none; border-radius: 5px; font-size: 14px; cursor: pointer; width: 100%;">
+                    📐 계산
+                </button>
             </div>
-        </div>
-        <div style="text-align: center;">
-            <button type="submit"
-                style="background: #28a745; color: white; padding: 12px 25px; border: none; border-radius: 5px; font-size: 16px; cursor: pointer;">
-                📐 함수 계산
-            </button>
+            
+            <!-- 우측: 함수 히스토리 -->
+            <div>
+                <label style="display: block; font-weight: bold; margin-bottom: 5px;">함수 히스토리:</label>
+                <div style="background: #fff; border: 1px solid #ddd; border-radius: 5px; padding: 10px; height: 120px; overflow-y: auto; font-family: monospace;">
+                    @if (Model.HasResult && !string.IsNullOrEmpty(Model.Func))
+                    {
+                        <div style="color: #28a745; margin-bottom: 5px;">
+                            @($"{Model.Func}({Model.Value}) = {Model.ResultValue}")
+                        </div>
+                    }
+                    <div style="color: #666; font-size: 12px;">함수 계산 결과가 여기에 표시됩니다.</div>
+                </div>
+            </div>
         </div>
     </form>
 
@@ -117,6 +154,5 @@ ViewData["Title"] = "계산기";
 
 <div style="text-align: center; margin-top: 30px;">
     <a href="/"
-        style="background:#6c757d; color:#fff; padding:10px 20px; text-decoration:none; border-radius:5px; font-size:14px;">🏠
-        홈으로 돌아가기</a>
+        style="background: #007bff; color: white; padding: 12px 20px; text-decoration: none; border-radius: 5px; font-size: 14px;">🏠 홈으로 돌아가기</a>
 </div>

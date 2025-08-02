@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Text.Json;
 
-namespace MyConsoleApp.Pages.Time
+namespace App.Pages.Time
 {
     public class IndexModel : PageModel
     {
