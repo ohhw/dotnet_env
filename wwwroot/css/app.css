@@ -1,0 +1,310 @@
+/* App.css - 메인 스타일시트 */
+
+/* 기본 스타일 */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: #f5f6fa;
+    color: #222;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    width: 95%;
+}
+
+/* 시간 표시 스타일 */
+.time-display {
+    background: #f0f0f0;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+    color: #222;
+}
+
+/* 버튼 기본 스타일 */
+button {
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    margin: 5px;
+    font-weight: bold;
+}
+
+button:hover {
+    background: #0056b3;
+    transform: translateY(-1px);
+}
+
+/* 메모 관련 스타일 */
+.memo-section {
+    background: #fffbe6;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 20px 0;
+    border: 1px solid #ffeaa7;
+    color: #333;
+}
+
+.memo-list {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 10px;
+    margin: 20px 0;
+    border: 1px solid #dee2e6;
+    color: #222;
+}
+
+.memo-item {
+    background: #ffffff;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #e9ecef;
+    margin: 8px 0;
+    color: #222;
+}
+
+.memo-link {
+    background: #6c757d;
+    color: white;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 4px;
+    display: inline-block;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+}
+
+.memo-link:hover {
+    background: #545b62;
+    color: white;
+}
+
+/* 계산기 스타일 */
+.calculator-input {
+    width: 100px;
+    padding: 8px;
+    margin: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 16px;
+}
+
+.calculator-result {
+    background: #e8f5e8;
+    padding: 15px;
+    border-radius: 8px;
+    margin: 15px 0;
+    border: 2px solid #28a745;
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* 상태 메시지 스타일 */
+.success {
+    background: #d4edda;
+    color: #155724;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #c3e6cb;
+    margin: 20px 0;
+}
+
+.error {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #f5c6cb;
+    margin: 20px 0;
+}
+
+.warning {
+    background: #fff3cd;
+    color: #856404;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px 0;
+    border: 1px solid #ffeaa7;
+}
+
+.info {
+    background: #d1ecf1;
+    color: #0c5460;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px 0;
+    border: 1px solid #bee5eb;
+}
+
+/* 그리드 레이아웃 */
+.main-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 30px;
+    max-width: 100%;
+    margin: 0;
+    padding: 10px;
+}
+
+/* 헤더 네비게이션 스타일 */
+.header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 15px 0;
+    margin-bottom: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.logo {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: white;
+    text-decoration: none;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    padding: 10px 16px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+.nav-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+/* 푸터 스타일 */
+.footer {
+    background: #343a40;
+    color: white;
+    margin-top: 50px;
+    padding: 30px 0 20px 0;
+    border-radius: 12px 12px 0 0;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.footer-link {
+    color: #adb5bd;
+    text-decoration: none;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+    font-size: 14px;
+}
+
+.footer-link:hover {
+    color: white;
+    background: #495057;
+    transform: translateY(-1px);
+}
+
+.footer-bottom {
+    text-align: center;
+    border-top: 1px solid #495057;
+    padding-top: 15px;
+    color: #6c757d;
+    font-size: 14px;
+}
+
+/* 버튼 변형 스타일 */
+.add-btn {
+    background: #28a745;
+    color: #fff;
+}
+
+.add-btn:hover {
+    background: #218838;
+}
+
+.delete-btn {
+    background: #dc3545;
+    color: #fff;
+}
+
+.delete-btn:hover {
+    background: #c82333;
+}
+
+/* 링크 스타일 */
+a {
+    text-decoration: none;
+    color: #007bff;
+}
+
+a:hover {
+    color: #0056b3;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    .container {
+        width: 98%;
+        padding: 10px;
+    }
+    
+    .main-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 10px;
+    }
+    
+    .nav-container {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    body {
+        margin: 20px;
+    }
+    
+    .footer-links {
+        flex-direction: column;
+        text-align: center;
+    }
+}

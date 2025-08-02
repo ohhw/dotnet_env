@@ -49,6 +49,30 @@ artifacts/
 # StyleCop
 StyleCopReport.xml
 
+# Backup files
+*.backup
+*.bak
+*~
+*.old
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Development files
+*.tmp
+*.swp
+*.swo
+
+# IDE files
+.vscode/
+.idea/
+
+# Environment variables
+.env
+.env.local
+
 # Files built by Visual Studio
 *_i.c
 *_p.c

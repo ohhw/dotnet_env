@@ -1,5 +1,5 @@
 @page
-@model MyConsoleApp.Pages.ContactModel
+@model App.Pages.ContactModel
 @{
     ViewData["Title"] = "문의하기";
 }
@@ -8,7 +8,7 @@
 
 <div class="info">
     <h3>💬 개발자에게 문의</h3>
-    <p>MyConsoleApp에 대한 문의사항이나 개선 제안이 있으시면 언제든지 연락해주세요!</p>
+    <p>App에 대한 문의사항이나 개선 제안이 있으시면 언제든지 연락해주세요!</p>
 </div>
 
 <div class="memo-section">
@@ -58,9 +58,4 @@
     <button onclick="window.open('https://github.com/ohhw/dotnet_env', '_blank')" class="memo-link">GitHub에서 기여하기</button>
 </div>
 
-<div class="other-links">
-    <h3>📖 관련 문서</h3>
-    <button onclick="location.href='/Privacy'" class="memo-link">개인정보처리방침</button>
-    <button onclick="location.href='/Terms'" class="memo-link">이용약관</button>
-    <button onclick="location.href='/FAQ'" class="memo-link">자주묻는질문</button>
-</div>
+

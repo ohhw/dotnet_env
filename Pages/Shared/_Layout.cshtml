@@ -4,296 +4,29 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewData["Title"] - 오현우님의 .NET 테스트 페이지</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 50px;
-            background: #f5f6fa;
-            color: #222;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .time-display {
-            background: #f0f0f0;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-            color: #222;
-        }
-
-        button {
-            background: #007bff;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 5px;
-            font-weight: bold;
-            font-size: 14px;
-        }
-
-        button:hover {
-            background: #0056b3;
-        }
-
-        .memo-section {
-            background: #fffbe6;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 20px 0;
-            border: 1px solid #ffeaa7;
-            color: #333;
-        }
-
-        .memo-link {
-            background: #17a2b8;
-            color: #fff !important;
-        }
-
-        .memo-link:hover {
-            background: #138496;
-        }
-
-        .add-btn {
-            background: #28a745;
-            color: #fff;
-        }
-
-        .add-btn:hover {
-            background: #218838;
-        }
-
-        .delete-btn {
-            background: #dc3545;
-            color: #fff;
-        }
-
-        .delete-btn:hover {
-            background: #c82333;
-        }
-
-        a {
-            text-decoration: none;
-            color: #007bff;
-            display: inline-block;
-            padding: 10px 20px;
-            border-radius: 5px;
-            margin: 5px;
-            font-weight: bold;
-            background: #e9ecef;
-            transition: background 0.2s, color 0.2s;
-            font-size: 14px;
-        }
-
-        a:hover {
-            background: #d6d8db;
-            color: #0056b3;
-        }
-
-        .memo-list {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-            border: 1px solid #dee2e6;
-            color: #222;
-        }
-
-        .memo-item {
-            background: #ffffff;
-            padding: 12px;
-            border-radius: 6px;
-            border: 1px solid #e9ecef;
-            margin: 8px 0;
-            color: #222;
-        }
-
-        .no-memo {
-            background: #e2e3e5;
-            color: #6c757d;
-            padding: 20px;
-            border-radius: 8px;
-            text-align: center;
-            border: 1px solid #d6d8db;
-        }
-
-        h1,
-        h2,
-        h3 {
-            color: #222;
-        }
-
-        .success {
-            background: #d4edda;
-            color: #155724;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid #c3e6cb;
-            margin: 20px 0;
-        }
-
-        .error {
-            background: #f8d7da;
-            color: #721c24;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid #f5c6cb;
-        }
-
-        /* Header Navigation Styles */
-        .header {
-            background: #8B0000;
-            padding: 0;
-            margin: -50px -50px 30px -50px;
-            box-shadow: 0 2px 4px rgba(139, 0, 0, 0.3);
-        }
-
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 50px;
-            max-width: none;
-        }
-
-        .navbar-brand {
-            color: #D6C9B1 !important;
-            text-decoration: none;
-            font-size: 2.0rem;
-            font-weight: bold;
-            background: transparent;
-            padding: 8px 16px;
-            border-radius: 6px;
-            transition: all 0.3s ease;
-        }
-
-        .navbar-brand:hover {
-            color: #E8DCC0 !important;
-            background: transparent;
-        }
-
-        .navbar-nav {
-            display: flex;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            gap: 40px;
-            justify-content: center;
-            flex: 1;
-        }
-
-        .nav-link {
-            color: #D6C9B1 !important;
-            text-decoration: none;
-            padding: 8px 16px;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-            font-weight: 400;
-            font-size: 1.4rem;
-            background: transparent;
-        }
-
-        .nav-link:hover {
-            color: #E8DCC0 !important;
-            background: transparent;
-            transform: translateY(-1px);
-        }
-
-        /* Footer Styles */
-        .footer {
-            background: #8B0000;
-            color: #D6C9B1;
-            padding: 30px 50px 20px 50px;
-            margin: 50px -50px -50px -50px;
-            margin-top: 50px;
-        }
-
-        .footer-content {
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 40px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-
-        .footer-link {
-            color: #D6C9B1 !important;
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            padding: 8px 16px;
-            border-radius: 4px;
-            font-weight: 400;
-            background: transparent;
-        }
-
-        .footer-link:hover {
-            color: #E8DCC0 !important;
-            background: transparent;
-            transform: translateY(-1px);
-            font-weight: bold;
-        }
-
-        .footer-bottom {
-            border-top: 1px solid rgba(214, 201, 177, 0.3);
-            padding-top: 15px;
-            font-size: 0.8rem;
-            color: rgba(214, 201, 177, 0.8);
-        }
-
-        /* 반응형 처리 */
-        @@media (max-width: 768px) {
-            .grid-container {
-                grid-template-columns: 1fr !important;
-                gap: 20px !important;
-            }
-            
-            .navbar-nav {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .navbar {
-                flex-direction: column;
-                text-align: center;
-            }
-        }
-    </style>
+    <title>@ViewData["Title"] - DOTNET_ENV Test Page</title>
+    <link rel="stylesheet" href="~/css/app.css" />
 </head>
 
 <body>
     <!-- Header Navigation -->
     <header class="header">
-        <nav class="navbar">
-            <a href="/" class="navbar-brand">.NET TEST</a>
-            <ul class="navbar-nav">
-                <li><a href="/" class="nav-link">🏠 Home</a></li>
-                <li><a href="/Memo/Add" class="nav-link">📝 Memo</a></li>
-                <li><a href="/Map" class="nav-link">🗺️ Map</a></li>
-                <li><a href="/Time" class="nav-link">⏰ Time</a></li>
-                <li><a href="/Calculator" class="nav-link">🧮 Calculator</a></li>
-                <li><a href="/HelloWorld" class="nav-link">ℹ️ About</a></li>
-            </ul>
+        <nav class="nav-container">
+            <a href="/" class="logo">🏠 DOTNET_ENV</a>
+            <div class="nav-links">
+                <a href="/" class="nav-link">🏠 홈</a>
+                <a href="/Memo" class="nav-link">📝 메모</a>
+                <a href="/Map" class="nav-link">🗺️ 지도</a>
+                <a href="/Time" class="nav-link">⏰ 시간</a>
+                <a href="/Calculator" class="nav-link">🧮 계산기</a>
+            </div>
         </nav>
     </header>
 
     <!-- Main Content -->
-    <div class="container">
+    <main class="container">
         @RenderBody()
-    </div>
+    </main>
 
     <!-- Footer -->
     <footer class="footer">
@@ -306,7 +39,7 @@
                 <a href="https://github.com/ohhw/dotnet_env" target="_blank" class="footer-link">GitHub</a>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2025 오현우님의 .NET 테스트 페이지. ASP.NET Core 9.0으로 제작되었습니다.</p>
+                © 2025 오현우님의 .NET 테스트 페이지. All rights reserved.
             </div>
         </div>
     </footer>
