@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace MyConsoleApp.Pages.Memo
+namespace App.Pages.Memo
 {
     public class DeleteModel : PageModel
     {
@@ -16,8 +16,8 @@ namespace MyConsoleApp.Pages.Memo
 
         public IActionResult OnPost()
         {
-            DeletedCount = SharedData.Memos.Count;
-            SharedData.Memos.Clear();
+            DeletedCount = SharedData.MemoCount;
+            SharedData.ClearAllMemos();
             IsDeleted = true;
             
             return Page();

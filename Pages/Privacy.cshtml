@@ -1,5 +1,5 @@
 @page
-@model MyConsoleApp.Pages.PrivacyModel
+@model App.Pages.PrivacyModel
 @{
     ViewData["Title"] = "개인정보처리방침";
 }
@@ -8,7 +8,7 @@
 
 <div class="info">
     <h3>🔒 개인정보 수집 및 이용</h3>
-    <p><strong>MyConsoleApp</strong>은 사용자의 개인정보를 소중히 여기며, 다음과 같이 처리합니다:</p>
+    <p><strong>DOTNET_ENV</strong>은 사용자의 개인정보를 소중히 여기며, 다음과 같이 처리합니다:</p>
     
     <h4>📊 수집하는 개인정보</h4>
     <ul>
@@ -36,13 +36,6 @@
     
     <h4>📞 문의처</h4>
     <p>개인정보 처리에 관한 문의는 <a href="/Contact">문의하기</a> 페이지를 이용해주세요.</p>
-</div>
-
-<div class="other-links">
-    <h3>📖 관련 문서</h3>
-    <button onclick="location.href='/Terms'" class="memo-link">이용약관</button>
-    <button onclick="location.href='/Contact'" class="memo-link">문의하기</button>
-    <button onclick="location.href='/FAQ'" class="memo-link">자주묻는질문</button>
 </div>
 
 <div class="warning">

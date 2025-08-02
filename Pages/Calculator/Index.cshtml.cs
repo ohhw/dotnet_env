@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace MyConsoleApp.Pages.Calculator
+namespace App.Pages.Calculator
 {
     public class IndexModel : PageModel
     {

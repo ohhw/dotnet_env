@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace MyConsoleApp.Pages.Memo
+namespace App.Pages.Memo
 {
     public class ViewModel : PageModel
     {

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace MyConsoleApp.Pages
+namespace App.Pages
 {
     public class FAQModel : PageModel
     {
