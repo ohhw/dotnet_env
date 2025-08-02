@@ -1,8 +1,8 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace MyConsoleApp.Pages
+namespace MyConsoleApp.Pages.Map
 {
-    public class MapModel : PageModel
+    public class IndexModel : PageModel
     {
         public void OnGet()
         {
