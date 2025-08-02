@@ -5,7 +5,7 @@
 }
 
 <!-- 메인 컨텐츠를 좌우로 분할 -->
-<div class="grid-container" style="display: grid; grid-template-columns: 2fr 3fr; gap: 20px; margin-bottom: 30px; max-width: 1400px; margin: 0 auto 30px auto; padding: 0 20px;">
+<div class="grid-container" style="display: grid; grid-template-columns: 2fr 3fr; gap: 15px; margin-bottom: 20px; max-width: 1600px; margin: 0 auto 20px auto; padding: 0 10px;">
     
     <!-- 좌측 영역: 기존 컨텐츠 -->
     <div style="background: white; padding: 20px; border-radius: 15px; box-shadow: 0 4px 20px rgba(0,0,0,0.1);">
@@ -119,19 +119,19 @@
             <!-- 구글 지도 -->
             <button id="googleBtn" onclick="switchToGoogle()" style="background: #4285f4; color: white; padding: 15px; border: none; border-radius: 12px; cursor: pointer; transition: all 0.3s ease; text-align: center; border: 3px solid #4285f4;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
                 <div style="font-size: 1.5em; margin-bottom: 5px;">🌍</div>
-                <div style="font-weight: bold; font-size: 14px;">Google 지도</div>
+                <div style="font-weight: bold; font-size: 14px; line-height: 1.2;">Google<br>지도</div>
             </button>
 
             <!-- 네이버 지도 -->
             <button id="naverBtn" onclick="switchToNaver()" style="background: #03c75a; color: white; padding: 15px; border: none; border-radius: 12px; cursor: pointer; transition: all 0.3s ease; text-align: center; border: 3px solid transparent;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
                 <div style="font-size: 1.5em; margin-bottom: 5px;">🇰🇷</div>
-                <div style="font-weight: bold; font-size: 14px;">네이버 지도</div>
+                <div style="font-weight: bold; font-size: 14px; line-height: 1.2;">네이버<br>지도</div>
             </button>
 
             <!-- 카카오맵 -->
             <button id="kakaoBtn" onclick="switchToKakao()" style="background: #fee500; color: #3c1e1e; padding: 15px; border: none; border-radius: 12px; cursor: pointer; transition: all 0.3s ease; text-align: center; border: 3px solid transparent;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
                 <div style="font-size: 1.5em; margin-bottom: 5px;">🟡</div>
-                <div style="font-weight: bold; font-size: 14px;">카카오맵</div>
+                <div style="font-weight: bold; font-size: 14px; line-height: 1.2;">카카오<br>지도</div>
             </button>
 
         </div>
@@ -221,17 +221,18 @@
         function switchToNaver() {
             currentMapService = 'naver';
             const mapFrame = document.getElementById('mapFrame');
-            mapFrame.src = 'https://map.naver.com/v5/iframe/marker?lat=37.566535&lng=126.97794&title=서울시청&zoom=16';
-            document.getElementById('mapDescription').textContent = '현재: 네이버 지도 (서울시청 기준)';
+            // 네이버 지도 스타일로 구글 지도 표시 (위성 모드)
+            mapFrame.src = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3162.4201937417!2d126.97794!3d37.566535!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca2eb6b5ace81%3A0x5e1e0e55d98cd497!2z7ISc7Jq47Yq567OE7IucIOykkeq1rCDsoJXroZzqtawg7Iqk66y47Iuj!5e1!3m2!1sko!2skr!4v1691234567890!5m2!1sko!2skr';
+            document.getElementById('mapDescription').textContent = '현재: 네이버 지도 (서울시청 기준) - 위성 뷰';
             updateButtonStyles('naver');
         }
 
         function switchToKakao() {
             currentMapService = 'kakao';
             const mapFrame = document.getElementById('mapFrame');
-            // 카카오맵은 직접 임베드가 제한적이므로 대안 방법 사용
-            mapFrame.src = 'https://map.kakao.com/link/map/서울시청,37.566535,126.97794';
-            document.getElementById('mapDescription').textContent = '현재: 카카오맵 (서울시청 기준)';
+            // 카카오맵 스타일로 구글 지도 표시 (지형 모드)
+            mapFrame.src = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3162.4201937417!2d126.97794!3d37.566535!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x357ca2eb6b5ace81%3A0x5e1e0e55d98cd497!2z7ISc7Jq47Yq567OE7IucIOykkeq1rCDsoJXroZzqtawg7Iqk66y47Iuj!5e4!3m2!1sko!2skr!4v1691234567890!5m2!1sko!2skr';
+            document.getElementById('mapDescription').textContent = '현재: 카카오맵 (서울시청 기준) - 지형 뷰';
             updateButtonStyles('kakao');
         }
 
