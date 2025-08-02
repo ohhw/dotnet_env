@@ -39,17 +39,17 @@
         </div>
 
         <div style="background: #e3f2fd; padding: 20px; border-radius: 10px; margin: 20px 0; text-align: center;">
-            <h3 style="margin: 0 0 15px 0; color: #1976d2;">⏰ 현재 시간</h3>
-            <div style="font-size: 18px; font-weight: bold; color: #333; margin-bottom: 8px;">
+            <h3 style="margin: 0 0 15px 0; color: #1976d2;">⏰ 현재 시간 (실시간)</h3>
+            <div id="currentDate" style="font-size: 18px; font-weight: bold; color: #333; margin-bottom: 8px;">
                 @DateTime.Now.ToString("yyyy년 MM월 dd일")
             </div>
-            <div style="font-size: 24px; font-weight: bold; color: #1976d2;">
+            <div id="currentTime" style="font-size: 24px; font-weight: bold; color: #1976d2;">
                 @DateTime.Now.ToString("HH:mm:ss")
             </div>
         </div>
 
         <div style="text-align: center; margin: 10px 0;">
-            <button onclick="location.reload()" style="background: #007bff; color: white; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 14px; margin: 0 5px;">🔄 시간 새로고침</button>
+            <button onclick="updateTimeManually()" style="background: #007bff; color: white; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 14px; margin: 0 5px;">🔄 수동 새로고침</button>
             <button onclick="window.location.href='/Time'" style="background: #007bff; color: white; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 14px; margin: 0 5px;">🕐 시간 페이지</button>
             <button onclick="window.location.href='/Time?format=json'" style="background: #007bff; color: white; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 14px; margin: 0 5px;">📊 JSON 형식</button>
         </div>
@@ -77,8 +77,8 @@
             
             <div style="max-width: 400px; margin: 0 auto;">
                 <input type="text" id="homeCalculatorInput" 
-                       placeholder="계산식을 입력하세요 (예: 2+3*4, sin(30), sqrt(16))" 
-                       style="width: 100%; padding: 12px 16px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px; font-size: 14px; font-family: 'Courier New', monospace; text-align: center;">
+                       placeholder="계산식 입력 (예: 2+3*4, sin(30))" 
+                       style="width: 100%; padding: 12px 16px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px; font-size: 14px; font-family: 'Courier New', monospace; text-align: center; box-sizing: border-box;">
                 
                 <div style="text-align: center; margin-bottom: 15px;">
                     <button onclick="calculateHomeExpression()" 
@@ -91,7 +91,7 @@
                     </button>
                 </div>
                 
-                <div id="homeCalculatorResult" style="background: #f8f9fa; color: #333; padding: 12px 16px; border-radius: 5px; text-align: center; font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 14px; min-height: 25px; border: 1px solid #ddd; margin-bottom: 15px;">결과가 여기에 표시됩니다</div>
+                <div id="homeCalculatorResult" style="background: #f8f9fa; color: #333; padding: 12px 16px; border-radius: 5px; text-align: center; font-family: 'Courier New', monospace; font-size: 14px; min-height: 25px; border: 1px solid #ddd; margin-bottom: 15px; width: 100%; box-sizing: border-box;">결과가 여기에 표시됩니다</div>
                 
                 <div style="text-align: center;">
                     <button onclick="window.location.href='/Calculator'" style="background: #007bff; color: white; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 14px;">🧮 고급 계산기</button>
@@ -126,11 +126,11 @@
             <h4 style="color: #333; margin-bottom: 15px; text-align: center;">📍 경로 검색 (Google)</h4>
             <div style="margin-bottom: 12px;">
                 <input type="text" id="startLocation" placeholder="📍 출발지 입력" 
-                       style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 10px; font-size: 14px;" />
+                       style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 10px; font-size: 14px; box-sizing: border-box;" />
             </div>
             <div style="margin-bottom: 15px;">
                 <input type="text" id="endLocation" placeholder="🎯 도착지 입력" 
-                       style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px; font-size: 14px;" />
+                       style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; margin-bottom: 15px; font-size: 14px; box-sizing: border-box;" />
             </div>
             <div style="display: grid; grid-template-columns: 1fr; gap: 10px;">
                 <button onclick="routeSearch()" style="background: linear-gradient(135deg, #007bff 0%, #0056b3 100%); color: white; padding: 12px 16px; border: none; border-radius: 8px; cursor: pointer; font-size: 14px; font-weight: bold; box-shadow: 0 2px 8px rgba(0,123,255,0.3); transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
@@ -171,8 +171,50 @@
 <script src="~/js/calculator.js"></script>
 
 <script>
+    // 실시간 시간 업데이트 함수
+    function updateTime() {
+        const now = new Date();
+        
+        // 날짜 포맷 (yyyy년 MM월 dd일)
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const dateString = `${year}년 ${month}월 ${day}일`;
+        
+        // 시간 포맷 (HH:mm:ss)
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const seconds = String(now.getSeconds()).padStart(2, '0');
+        const timeString = `${hours}:${minutes}:${seconds}`;
+        
+        // DOM 업데이트
+        const dateElement = document.getElementById('currentDate');
+        const timeElement = document.getElementById('currentTime');
+        
+        if (dateElement) dateElement.textContent = dateString;
+        if (timeElement) timeElement.textContent = timeString;
+    }
+    
+    // 수동 새로고침 함수
+    function updateTimeManually() {
+        updateTime();
+        // 피드백을 위해 잠깐 스타일 변경
+        const timeElement = document.getElementById('currentTime');
+        if (timeElement) {
+            const originalColor = timeElement.style.color;
+            timeElement.style.color = '#28a745';
+            setTimeout(() => {
+                timeElement.style.color = originalColor || '#1976d2';
+            }, 500);
+        }
+    }
+
     // 엔터키 이벤트 및 초기화
     document.addEventListener('DOMContentLoaded', function() {
+        // 실시간 시간 업데이트 시작 (1초마다)
+        updateTime(); // 즉시 한 번 실행
+        setInterval(updateTime, 1000); // 1초마다 반복
+        
         // 빠른 검색 엔터키 이벤트
         const quickSearchInput = document.getElementById('quickSearchLocation');
         if (quickSearchInput) {
@@ -232,8 +274,8 @@
             // 안전한 계산을 위해 Function 사용
             const calculationResult = Function(`"use strict"; return (${expression})`)();
             
-            result.textContent = `= ${calculationResult}`;
-            result.style.color = '#0f0';
+            result.textContent = `${calculationResult}`;
+            result.style.color = '#333';
         } catch (error) {
             result.textContent = '계산 오류: 올바른 식을 입력해주세요';
             result.style.color = '#dc3545';
@@ -243,7 +285,7 @@
     function clearHomeCalculator() {
         document.getElementById('homeCalculatorInput').value = '';
         document.getElementById('homeCalculatorResult').textContent = '결과가 여기에 표시됩니다';
-        document.getElementById('homeCalculatorResult').style.color = '#0f0';
+        document.getElementById('homeCalculatorResult').style.color = '#333';
     }
     
     // Enter 키로 계산 실행
