@@ -146,7 +146,7 @@
                 <input type="text" id="quickSearchLocation" placeholder="장소를 입력하세요" 
                        style="width: 100%; padding: 12px; border: 2px solid #e9ecef; border-radius: 8px; font-size: 14px; box-sizing: border-box;">
             </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-bottom: 10px;">
                 <button onclick="quickSearchGoogle()" style="background: #4285f4; color: white; padding: 10px; border: none; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: bold; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
                     🌍 Google
                 </button>
@@ -155,6 +155,11 @@
                 </button>
                 <button onclick="quickSearchKakao()" style="background: #fee500; color: #3c1e1e; padding: 10px; border: none; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: bold; transition: all 0.3s ease;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
                     🟡 카카오
+                </button>
+            </div>
+            <div style="text-align: center;">
+                <button onclick="searchGoogleMapsEmbed(document.getElementById('quickSearchLocation').value)" style="background: #1976d2; color: white; padding: 8px 16px; border: none; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: bold;">
+                    🔍 지도에 표시
                 </button>
             </div>
         </div>
@@ -171,6 +176,9 @@
 <script src="~/js/calculator.js"></script>
 
 <script>
+    // API 키는 환경 변수에서 불러옴
+    setGoogleMapsApiKey('@Model.GoogleMapsApiKey');
+    
     // 실시간 시간 업데이트 함수
     function updateTime() {
         const now = new Date();

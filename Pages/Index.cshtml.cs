@@ -1,18 +1,31 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using App;
 
 namespace App.Pages
 {
     public class IndexModel : PageModel
     {
+        private readonly IConfiguration _configuration;
+        
         public List<string> Memos { get; set; } = new List<string>();
         public int MemoCount => Memos.Count;
         public string UserName { get; set; } = "";
+        public string GoogleMapsApiKey { get; set; } = "";
+
+        public IndexModel(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
 
         public void OnGet(string name = "")
         {
             // SharedData에서 메모 데이터 가져오기
             Memos = SharedData.Memos;
+            
+            // API 키는 환경 변수에서 불러옴
+            GoogleMapsApiKey = _configuration["GoogleMaps:ApiKey"] ?? 
+                              Environment.GetEnvironmentVariable("GOOGLE_MAPS_API_KEY") ?? "";
             
             // 사용자 이름 설정
             if (!string.IsNullOrEmpty(name))

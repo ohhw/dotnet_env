@@ -122,6 +122,23 @@ dotnet_env/
 ### 환경 변수
 개발 환경에서는 별도의 환경 변수 설정이 필요하지 않습니다.
 
+**Google Maps API 키 설정 (선택사항):**
+지도 검색 기능을 사용하려면 Google Maps API 키가 필요합니다.
+
+```bash
+# 환경 변수로 설정
+export GOOGLE_MAPS_API_KEY="your_api_key_here"
+
+# 또는 appsettings.json에서 설정
+{
+  "GoogleMaps": {
+    "ApiKey": "your_api_key_here"
+  }
+}
+```
+
+보안상 API 키는 소스코드에 직접 포함하지 않고 환경 변수나 설정 파일을 통해 관리합니다.
+
 ## 📝 라이센스
 
 이 프로젝트는 개인 학습 및 테스트 목적으로 제작되었습니다.

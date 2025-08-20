@@ -1,5 +1,13 @@
 // maps.js - 지도 관련 JavaScript (실용적 간소화 버전)
 
+// 글로벌 변수로 API 키 저장 (서버에서 제공)
+let googleMapsApiKey = '';
+
+// API 키 설정 함수 (서버에서 호출)
+function setGoogleMapsApiKey(apiKey) {
+    googleMapsApiKey = apiKey;
+}
+
 // 실시간 지도 - 구글만 사용
 function switchToGoogle() {
     // Google 지도 iframe 표시 (서울 중심가)
@@ -55,4 +63,25 @@ function quickSearchKakao() {
     }
     window.open(`https://map.kakao.com/?q=${encodeURIComponent(query)}`, '_blank');
     console.log(`카카오맵 검색: "${query}"`);
+}
+
+// Google Maps 임베드 검색 기능 (API 키는 환경 변수에서 불러옴)
+function searchGoogleMapsEmbed(query) {
+    if (!query.trim()) {
+        alert('🚩 검색할 장소를 입력해주세요!');
+        return;
+    }
+    
+    if (!googleMapsApiKey) {
+        alert('⚠️ Google Maps API 키가 설정되지 않았습니다.');
+        console.error('Google Maps API key not set');
+        return;
+    }
+    
+    // API 키는 환경 변수에서 불러옴
+    const mapFrame = document.getElementById('mapFrame');
+    if (mapFrame) {
+        mapFrame.src = `https://www.google.com/maps/embed/v1/search?key=${googleMapsApiKey}&q=${encodeURIComponent(query)}`;
+        document.getElementById('mapDescription').textContent = `검색 결과: ${query}`;
+    }
 }
